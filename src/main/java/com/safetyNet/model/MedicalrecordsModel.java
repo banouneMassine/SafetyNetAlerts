@@ -23,7 +23,4 @@ public class MedicalrecordsModel {
 	
 	@JsonProperty("allergies")
 	Map<String,String> allergies ;
-	
-	
-
 }

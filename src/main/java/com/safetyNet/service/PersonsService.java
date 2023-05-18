@@ -12,23 +12,34 @@ import lombok.Data;
 
 @Data
 @Service
-public class PersonsService
-{
+public class PersonsService {
 	@Autowired
 	PersonsRepository personsRepository;
-	
+
 	public List<PersonsModel> getPersons() {
-        return personsRepository.findAll();
-    }
-	
-	public PersonsModel getPerson(String firstName)
-	{
-		return personsRepository.findByfirstName(firstName);
+		return personsRepository.findAll();
 	}
-	// ajouter une personne au fichier JSON 
-	public String addPerson (PersonsModel person)
-	{
+
+	public PersonsModel getPerson(String firstName, String lastName) {
+		return personsRepository.findByfirstName(firstName, lastName);
+	}
+
+	// ajouter une personne 
+	public String addPerson(PersonsModel person) {
 		return personsRepository.save(person);
+	}
+
+	// supprimer une personne 
+	public void removePerson(String firstName, String lastName) {
+
+		PersonsModel personToMDelet = personsRepository.findByfirstName(firstName, lastName);
+		personsRepository.deletePerson(personToMDelet);
+	}
+
+	//modifier une personne
+	public void updatePerson(PersonsModel  newPreson) 
+	{
+		personsRepository.updatePerson(newPreson);
 	}
 
 }
