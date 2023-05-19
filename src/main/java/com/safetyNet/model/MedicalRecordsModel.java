@@ -1,14 +1,15 @@
 package com.safetyNet.model;
 
 
-import java.util.Map;
+import java.util.List;
+
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 
 @Data
-public class MedicalrecordsModel {
+public class MedicalRecordsModel {
 	@JsonProperty("firstName")
 	public String firstName ;
 	
@@ -19,8 +20,8 @@ public class MedicalrecordsModel {
 	public String birthdate ;
 	
 	@JsonProperty("medications")
-	Map<String,String> medications ;
+	List<String> medications ;
 	
 	@JsonProperty("allergies")
-	Map<String,String> allergies ;
+	List<String> allergies ;
 }
