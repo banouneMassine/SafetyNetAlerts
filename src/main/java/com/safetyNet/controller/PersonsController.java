@@ -28,52 +28,31 @@ public class PersonsController {
 	}
 
 	@GetMapping("/person/{firstName}/{lastName}")
-	public ResponseEntity<PersonsModel> getPerson(@PathVariable String firstName ,@PathVariable String lastName) {
+	public ResponseEntity<PersonsModel> getPerson(@PathVariable String firstName, @PathVariable String lastName) {
 		return ResponseEntity.status(HttpStatus.OK).body(personsService.getPerson(firstName, lastName));
 	}
 
 	// ajouter une personne au fichier JSON
 	@PostMapping(value = "/person")
 	public ResponseEntity<String> postPerson(@RequestBody PersonsModel preson) {
-		
-		if(preson !=  null)
-    	{
-			personsService.addPerson(preson);
-     	   return ResponseEntity.ok("la personne est ajouté avec succès.");
-    	}
-	    else 
-	    {
-	        return ResponseEntity.notFound().build();
-	    }
+
+		return personsService.addPerson(preson);
+
 	}
 
 	// supprimer une personne du fichier JSON
 	@DeleteMapping(value = "/person/{firstName}/{lastName}")
-    public ResponseEntity<String> deletePerson(@PathVariable  String firstName , @PathVariable  String lastName) 
-	{
-    	if(firstName != null && lastName != null)
-    	{
-    		personsService.removePerson(firstName,lastName );
-     	   return ResponseEntity.ok("la personne est supprimée avec succès.");
-    	}
-	    else 
-	    {
-	        return ResponseEntity.notFound().build();
-	    }
-    }
+	public ResponseEntity<String> deletePerson(@PathVariable String firstName, @PathVariable String lastName) {
+
+		return personsService.removePerson(firstName, lastName);
+
+	}
 
 	// Modifier une personne du fichier JSON
 	@PutMapping(value = "/person")
-	public ResponseEntity<String>  putPerson(@RequestBody PersonsModel newPreson) {
-		
-		if(newPreson != null )
-    	{
-			personsService.updatePerson(newPreson);
-     	   return ResponseEntity.ok("Les informations de la personne sont mises à jour avec succès.");
-    	}
-	    else 
-	    {
-	        return ResponseEntity.notFound().build();
-	    }
+	public ResponseEntity<String> putPerson(@RequestBody PersonsModel newPreson) {
+
+		return personsService.updatePerson(newPreson);
+
 	}
 }

@@ -3,6 +3,7 @@ package com.safetyNet.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.safetyNet.model.PersonsModel;
@@ -25,21 +26,48 @@ public class PersonsService {
 	}
 
 	// ajouter une personne 
-	public String addPerson(PersonsModel person) {
-		return personsRepository.save(person);
+	public ResponseEntity<String> addPerson(PersonsModel person) {
+		
+		if(person !=  null)
+    	{
+			
+		   personsRepository.save(person);
+     	   return ResponseEntity.ok("la personne est ajoutée avec succès.");
+    	}
+	    else 
+	    {
+	        return ResponseEntity.notFound().build();
+	    }
 	}
 
 	// supprimer une personne 
-	public void removePerson(String firstName, String lastName) {
+	public ResponseEntity<String>  removePerson(String firstName, String lastName) {
 
-		PersonsModel personToMDelet = personsRepository.findByfirstName(firstName, lastName);
-		personsRepository.deletePerson(personToMDelet);
+		if(firstName != null && lastName != null)
+    	{
+			PersonsModel personToMDelet = personsRepository.findByfirstName(firstName, lastName);
+			personsRepository.deletePerson(personToMDelet);
+			return ResponseEntity.ok("la personne est supprimée avec succès.");
+    	}
+	    else 
+	    {
+	        return ResponseEntity.notFound().build();
+	    }
 	}
 
 	//modifier une personne
-	public void updatePerson(PersonsModel  newPreson) 
+	public ResponseEntity<String> updatePerson(PersonsModel  newPreson) 
 	{
-		personsRepository.updatePerson(newPreson);
+		
+		if(newPreson != null )
+    	{
+			personsRepository.updatePerson(newPreson);
+     	   return ResponseEntity.ok("Les informations de la personne sont mises à jour avec succès.");
+    	}
+	    else 
+	    {
+	        return ResponseEntity.notFound().build();
+	    }
 	}
 
 }

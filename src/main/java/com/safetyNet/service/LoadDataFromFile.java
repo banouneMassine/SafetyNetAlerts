@@ -33,18 +33,17 @@ public class LoadDataFromFile implements LoadData {
 	@Autowired
 	private FirestationsRepository firestationsRepository ;
 	
-	//@Value("${json.filePath}")
-	//private String filePath;
-
-	private final File jsonFile = new File(
-			"C:\\Users\\banou\\OneDrive\\Bureau\\formation java\\projet 5\\SafetyNetAlerts\\src\\main\\resources\\data.json");
-
+	
+	
+	@Value("${json.file.path}")
+    private String jsonFilePath;
+	
 	private final ObjectMapper objectMapper = new ObjectMapper();
 
 	@Override
 	@PostConstruct
 	public void getData() {
-
+		File jsonFile = new File(jsonFilePath);
 		JsonNode jsonNode = null;
 		try {
 			// Lecture du fichier JSON

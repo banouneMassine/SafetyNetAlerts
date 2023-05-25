@@ -20,66 +20,44 @@ import com.safetyNet.service.MedicalRecordsService;
 public class MedicalRecordController {
 
 	@Autowired
-	MedicalRecordsService  medicalRecordsService;
-	
-	//Recuperer tous les MedicalRecords
+	MedicalRecordsService medicalRecordsService;
+
+	// Recuperer tous les MedicalRecords
 	@GetMapping("/medicalRecordALL")
-	public ResponseEntity<List<MedicalRecordsModel>> getMedicalRecordsAll()
-	{
+	public ResponseEntity<List<MedicalRecordsModel>> getMedicalRecordsAll() {
 		return ResponseEntity.status(HttpStatus.OK).body(medicalRecordsService.getMedicalRecords());
 	}
-	
-	//Recuperer un  MedicalRecord
+
+	// Recuperer un MedicalRecord
 	@GetMapping("/medicalRecord/{firstName}/{lastName}")
-	public ResponseEntity<MedicalRecordsModel> getMedicalRecond(@PathVariable String firstName ,@PathVariable String lastName)
-	{
-		return ResponseEntity.status(HttpStatus.OK).body(medicalRecordsService.getMedicalRecord(firstName , lastName));
+	public ResponseEntity<MedicalRecordsModel> getMedicalRecond(@PathVariable String firstName,
+			@PathVariable String lastName) {
+		return ResponseEntity.status(HttpStatus.OK).body(medicalRecordsService.getMedicalRecord(firstName, lastName));
 	}
-	
+
 	// Ajouter un MedicalRecord
-	
+
 	@PostMapping(value = "/medicalRecord")
-	public ResponseEntity<String> postMedicalRecaord(@RequestBody MedicalRecordsModel newMedicalRecord)
-	{
-		if(newMedicalRecord != null)
-		{
-			medicalRecordsService.addMedicalRecord(newMedicalRecord);
-	     	return ResponseEntity.ok("le dossier est ajouté avec succès.");
-		}else
-		{
-			return  ResponseEntity.notFound().build();
-		}
-		
-		
+	public ResponseEntity<String> postMedicalRecaord(@RequestBody MedicalRecordsModel newMedicalRecord) {
+
+		return medicalRecordsService.addMedicalRecord(newMedicalRecord);
+
 	}
-	
+
 	// Modifier un MedicalRecord
 	@PutMapping(value = "/medicalRecord")
-	public ResponseEntity<String> putMedicalRecaord(@RequestBody MedicalRecordsModel updateMedicalRecord)
-	{
-		if(updateMedicalRecord != null)
-		{
-			medicalRecordsService.updateMedicalRecord(updateMedicalRecord);
-			return ResponseEntity.ok("le dossier est mis à jour avec succès.");
-		}else
-		{
-			return  ResponseEntity.notFound().build();
-		}
+	public ResponseEntity<String> putMedicalRecaord(@RequestBody MedicalRecordsModel updateMedicalRecord) {
+
+		return medicalRecordsService.updateMedicalRecord(updateMedicalRecord);
+
 	}
-	
+
 	// Supprimer un MedicalRecord
 	@DeleteMapping(value = "/medicalRecord/{firstName}/{lastName}")
-    public ResponseEntity<String> deleteMedicalRecaord(@PathVariable  String firstName , @PathVariable  String lastName) 
-	{
-    	if(firstName != null && lastName != null)
-    	{
-    		medicalRecordsService.removeMedicalRecord(firstName,lastName );
-     	   return ResponseEntity.ok("le dossier est supprimée avec succès.");
-    	}
-	    else 
-	    {
-	        return ResponseEntity.notFound().build();
-	    }
-    }
-	
+	public ResponseEntity<String> deleteMedicalRecaord(@PathVariable String firstName, @PathVariable String lastName) {
+
+		return medicalRecordsService.removeMedicalRecord(firstName, lastName);
+
+	}
+
 }
