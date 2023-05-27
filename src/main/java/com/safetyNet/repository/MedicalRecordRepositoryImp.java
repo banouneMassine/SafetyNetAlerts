@@ -40,9 +40,13 @@ public class MedicalRecordRepositoryImp implements MedicalRecordRepository{
 	}
 
 	@Override
-	public void updateMedicalRecord(MedicalRecordsModel MedicalRecordModify) {
+	public MedicalRecordsModel updateMedicalRecord(MedicalRecordsModel MedicalRecordModify) {
 		MedicalRecordsModel medicalRecordsSearche = this.findByfirstName(MedicalRecordModify.firstName, MedicalRecordModify.lastName);
-		medicalRecordsSearche.birthdate= MedicalRecordModify.birthdate;
+		if (medicalRecordsSearche != null)
+		{
+			medicalRecordsSearche.birthdate= MedicalRecordModify.birthdate;
+		}
+		return null ;
 		//medicalRecordsSearche.= MedicalRecordModify.medications;
 		
 		

@@ -44,17 +44,22 @@ public class FirestationsRepositoryImp implements FirestationsRepository {
 	}
 	
 	@Override
-	public void updateFireStation(FirestationsModel updateFireStations)
+	public FirestationsModel updateFireStation(FirestationsModel updateFireStations)
 	{
 		FirestationsModel FireStationsToModify = this.findByAdresse(updateFireStations.address);
-		FireStationsToModify.station= updateFireStations.station;
+		if(FireStationsToModify != null )
+		{
+			FireStationsToModify.station= updateFireStations.station;
+			return FireStationsToModify;
+		}
+		return null ;
 		
 	}
 	
 	@Override
-	public void removeFireStation(String adresse)
+	public void removeFireStation(FirestationsModel FireStationToDelete)
 	{
-		FirestationsModel FireStationToDelete =this.findByAdresse(adresse);
+	
 		this.listOfFireStations.remove(FireStationToDelete);
 	}
 

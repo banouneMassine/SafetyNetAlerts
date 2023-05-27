@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.safetyNet.exceptions.PersonIntrovableExeption;
 import com.safetyNet.model.PersonsModel;
 import com.safetyNet.service.PersonsService;
 
@@ -23,12 +24,13 @@ public class PersonsController {
 	private PersonsService personsService;
 
 	@GetMapping("/personALL")
-	public ResponseEntity<List<PersonsModel>> getPersonsALL() {
+	public ResponseEntity<List<PersonsModel>> getPersonsALL() throws PersonIntrovableExeption {
+		
 		return ResponseEntity.status(HttpStatus.OK).body(personsService.getPersons());
 	}
 
 	@GetMapping("/person/{firstName}/{lastName}")
-	public ResponseEntity<PersonsModel> getPerson(@PathVariable String firstName, @PathVariable String lastName) {
+	public ResponseEntity<PersonsModel> getPerson(@PathVariable String firstName, @PathVariable String lastName) throws PersonIntrovableExeption {
 		return ResponseEntity.status(HttpStatus.OK).body(personsService.getPerson(firstName, lastName));
 	}
 
@@ -42,7 +44,7 @@ public class PersonsController {
 
 	// supprimer une personne du fichier JSON
 	@DeleteMapping(value = "/person/{firstName}/{lastName}")
-	public ResponseEntity<String> deletePerson(@PathVariable String firstName, @PathVariable String lastName) {
+	public ResponseEntity<String> deletePerson(@PathVariable String firstName, @PathVariable String lastName) throws PersonIntrovableExeption {
 
 		return personsService.removePerson(firstName, lastName);
 
@@ -50,7 +52,7 @@ public class PersonsController {
 
 	// Modifier une personne du fichier JSON
 	@PutMapping(value = "/person")
-	public ResponseEntity<String> putPerson(@RequestBody PersonsModel newPreson) {
+	public ResponseEntity<String> putPerson(@RequestBody PersonsModel newPreson) throws PersonIntrovableExeption {
 
 		return personsService.updatePerson(newPreson);
 

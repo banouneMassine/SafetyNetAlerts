@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.safetyNet.exceptions.FireStationIntrouvableException;
 import com.safetyNet.model.FirestationsModel;
 import com.safetyNet.repository.FirestationsRepository;
 
@@ -30,10 +31,11 @@ public class FirestationsService {
 	    }
 	}
 	
-	public ResponseEntity<String>  updateFireStations(FirestationsModel updateFireStations)
+	public ResponseEntity<String>  updateFireStations(FirestationsModel updateFireStations) throws FireStationIntrouvableException
 	{
 		if(updateFireStations !=  null)
     	{
+			if(firestationsRepository.updateFireStation(updateFireStations) == null) throw new FireStationIntrouvableException("La station"+ updateFireStations.address + " est introuvable ");
 			firestationsRepository.updateFireStation(updateFireStations);
      	    return ResponseEntity.ok("la fireStation a été mise à jour avec succès.");
     	}
@@ -43,11 +45,13 @@ public class FirestationsService {
 	    }
 	}
 	
-	public ResponseEntity<String> deleteFireStations( String adresse)
+	public ResponseEntity<String> deleteFireStations( String adresse) throws FireStationIntrouvableException
 	{
 		if(adresse !=  null)
     	{
-			firestationsRepository.removeFireStation(adresse);
+			FirestationsModel FireStationToDelete =firestationsRepository.findByAdresse(adresse);
+			if(FireStationToDelete == null ) throw new FireStationIntrouvableException("La station"+ adresse + " est introuvable");
+			firestationsRepository.removeFireStation(FireStationToDelete);
      	    return ResponseEntity.ok("la fireStation a été supprimée avec succès.");
     	}
 	    else 
@@ -57,14 +61,16 @@ public class FirestationsService {
 	}
 	
 	
-	public List<FirestationsModel> getFireStations()
+	public List<FirestationsModel> getFireStations() throws FireStationIntrouvableException
 	{
+		if(firestationsRepository.findAll().isEmpty()) throw new FireStationIntrouvableException("La liste des stations est vide");
 		return firestationsRepository.findAll();
 		
 	}
 	
-	public FirestationsModel getFireStation(String adresse)
+	public FirestationsModel getFireStation(String adresse) throws FireStationIntrouvableException
 	{
+		if(firestationsRepository.findByAdresse(adresse) == null) throw new FireStationIntrouvableException("La station "+ adresse + "  est vide");
 		return firestationsRepository.findByAdresse(adresse);
 	}
 	

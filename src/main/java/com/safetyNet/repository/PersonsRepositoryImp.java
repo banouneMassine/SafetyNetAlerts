@@ -17,7 +17,7 @@ public class PersonsRepositoryImp implements PersonsRepository {
 
 	@Override
 	public List<PersonsModel> findAll() {
-
+		
 		return this.personsList;
 	}
 
@@ -50,14 +50,21 @@ public class PersonsRepositoryImp implements PersonsRepository {
 	
 	// modifier une personne du fichier JSON
 	@Override
-	public void updatePerson(PersonsModel newPreson) 
+	public PersonsModel updatePerson(PersonsModel newPreson) 
 	{
 			PersonsModel personSearche= this.findByfirstName(newPreson.firstName, newPreson.lastName);
-			personSearche.address=newPreson.address;
-			personSearche.city=newPreson.city;
-			personSearche.zip=newPreson.zip;
-			personSearche.email=newPreson.email;
-			personSearche.phone=newPreson.phone;
+			if (personSearche != null)
+			{
+				personSearche.address=newPreson.address;
+				personSearche.city=newPreson.city;
+				personSearche.zip=newPreson.zip;
+				personSearche.email=newPreson.email;
+				personSearche.phone=newPreson.phone;
+				return newPreson ; 
+			}
+			
+			return null ;
+			
 	}
 
 }

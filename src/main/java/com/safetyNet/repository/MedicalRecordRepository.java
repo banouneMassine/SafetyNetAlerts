@@ -13,7 +13,7 @@ public interface MedicalRecordRepository {
 	public MedicalRecordsModel findByfirstName(String firstName , String lastName);// Get one MedicalRecord
 
 	public void saveMedicalRecord(MedicalRecordsModel newMedicalRecord );
-	public void updateMedicalRecord(MedicalRecordsModel MedicalRecordModify);
+	public MedicalRecordsModel updateMedicalRecord(MedicalRecordsModel MedicalRecordModify);
 	public void deleteMedicalRecordsModel(MedicalRecordsModel MedicalRecordDelete );
 	
 	//autre

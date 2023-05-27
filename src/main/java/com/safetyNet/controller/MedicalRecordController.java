@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.safetyNet.exceptions.MedicalRecordsIntrouvableException;
 import com.safetyNet.model.MedicalRecordsModel;
 import com.safetyNet.service.MedicalRecordsService;
 
@@ -24,14 +25,14 @@ public class MedicalRecordController {
 
 	// Recuperer tous les MedicalRecords
 	@GetMapping("/medicalRecordALL")
-	public ResponseEntity<List<MedicalRecordsModel>> getMedicalRecordsAll() {
+	public ResponseEntity<List<MedicalRecordsModel>> getMedicalRecordsAll() throws MedicalRecordsIntrouvableException {
 		return ResponseEntity.status(HttpStatus.OK).body(medicalRecordsService.getMedicalRecords());
 	}
 
 	// Recuperer un MedicalRecord
 	@GetMapping("/medicalRecord/{firstName}/{lastName}")
 	public ResponseEntity<MedicalRecordsModel> getMedicalRecond(@PathVariable String firstName,
-			@PathVariable String lastName) {
+			@PathVariable String lastName) throws MedicalRecordsIntrouvableException {
 		return ResponseEntity.status(HttpStatus.OK).body(medicalRecordsService.getMedicalRecord(firstName, lastName));
 	}
 
@@ -46,7 +47,7 @@ public class MedicalRecordController {
 
 	// Modifier un MedicalRecord
 	@PutMapping(value = "/medicalRecord")
-	public ResponseEntity<String> putMedicalRecaord(@RequestBody MedicalRecordsModel updateMedicalRecord) {
+	public ResponseEntity<String> putMedicalRecaord(@RequestBody MedicalRecordsModel updateMedicalRecord) throws MedicalRecordsIntrouvableException {
 
 		return medicalRecordsService.updateMedicalRecord(updateMedicalRecord);
 
@@ -54,7 +55,7 @@ public class MedicalRecordController {
 
 	// Supprimer un MedicalRecord
 	@DeleteMapping(value = "/medicalRecord/{firstName}/{lastName}")
-	public ResponseEntity<String> deleteMedicalRecaord(@PathVariable String firstName, @PathVariable String lastName) {
+	public ResponseEntity<String> deleteMedicalRecaord(@PathVariable String firstName, @PathVariable String lastName) throws MedicalRecordsIntrouvableException {
 
 		return medicalRecordsService.removeMedicalRecord(firstName, lastName);
 

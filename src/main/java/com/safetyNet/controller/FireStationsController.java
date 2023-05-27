@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.safetyNet.exceptions.FireStationIntrouvableException;
 import com.safetyNet.model.FirestationsModel;
 import com.safetyNet.service.FirestationsService;
 
@@ -24,13 +25,13 @@ public class FireStationsController {
 	FirestationsService fireStationsService ;
 	
 	@GetMapping("/firestationAll")
-	public ResponseEntity<List<FirestationsModel>> getFireStationsAll()
+	public ResponseEntity<List<FirestationsModel>> getFireStationsAll() throws FireStationIntrouvableException
 	{
 		
 		return ResponseEntity.status(HttpStatus.OK).body(fireStationsService.getFireStations());
 	}
 	@GetMapping("/firestation/{adresse}")
-	public ResponseEntity<FirestationsModel>getFireStation(@PathVariable String adresse)
+	public ResponseEntity<FirestationsModel>getFireStation(@PathVariable String adresse) throws FireStationIntrouvableException
 	{
 		
 		return ResponseEntity.status(HttpStatus.OK).body(fireStationsService.getFireStation(adresse));
@@ -44,13 +45,13 @@ public class FireStationsController {
 	
 	
 	@PutMapping(value="/firestation")
-	public ResponseEntity<String> putFireStation(@RequestBody FirestationsModel updateFireStations)
+	public ResponseEntity<String> putFireStation(@RequestBody FirestationsModel updateFireStations) throws FireStationIntrouvableException
 	{
 		return fireStationsService.updateFireStations(updateFireStations);
 	}
 	
 	@DeleteMapping(value = "/firestation/{adresse}")
-	public ResponseEntity<String> deleteFireStation(@PathVariable  String adresse)
+	public ResponseEntity<String> deleteFireStation(@PathVariable  String adresse) throws FireStationIntrouvableException
 	{
 		return fireStationsService.deleteFireStations(adresse);
 	}

@@ -13,9 +13,9 @@ public interface FirestationsRepository {
 		public FirestationsModel findByAdresse(String adresse);// Get one Firestation
 		void saveFireStation(FirestationsModel newFirestations);
 		void addFirestation(FirestationsModel firestations);
-		void updateFireStation(FirestationsModel updateFireStations);
+		FirestationsModel updateFireStation(FirestationsModel updateFireStations);
 		
-		void removeFireStation(String adresse);
+		void removeFireStation(FirestationsModel FireStationToDelete);
 		
 
 }
