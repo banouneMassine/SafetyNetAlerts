@@ -35,8 +35,12 @@ public class MedicalRecordRepositoryImp implements MedicalRecordRepository{
 	}
 
 	@Override
-	public void saveMedicalRecord(MedicalRecordsModel newMedicalRecord) {
-		this.MedicalRecordsList.add(newMedicalRecord);
+	public MedicalRecordsModel saveMedicalRecord(MedicalRecordsModel newMedicalRecord) {
+		if(this.MedicalRecordsList.add(newMedicalRecord))
+		{
+			return newMedicalRecord;
+		}
+		return null ; 
 	}
 
 	@Override
@@ -45,9 +49,10 @@ public class MedicalRecordRepositoryImp implements MedicalRecordRepository{
 		if (medicalRecordsSearche != null)
 		{
 			medicalRecordsSearche.birthdate= MedicalRecordModify.birthdate;
+			return medicalRecordsSearche;
 		}
 		return null ;
-		//medicalRecordsSearche.= MedicalRecordModify.medications;
+		
 		
 		
 		
@@ -55,10 +60,14 @@ public class MedicalRecordRepositoryImp implements MedicalRecordRepository{
 	}
 
 	@Override
-	public void deleteMedicalRecordsModel(MedicalRecordsModel MedicalRecordDelete) 
+	public MedicalRecordsModel deleteMedicalRecordsModel(MedicalRecordsModel MedicalRecordDelete) 
 	{
 		
-		this.MedicalRecordsList.remove(MedicalRecordDelete);
+		if(this.MedicalRecordsList.remove(MedicalRecordDelete))
+		{
+			return MedicalRecordDelete;
+		}
+		return null ; 
 	}
 
 	

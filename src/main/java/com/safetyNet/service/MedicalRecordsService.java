@@ -33,40 +33,33 @@ public class MedicalRecordsService {
 
 	// Ajouter un MedicalRecords
 
-	public ResponseEntity<String> addMedicalRecord(MedicalRecordsModel newMedicalRecord) {
+	public MedicalRecordsModel addMedicalRecord(MedicalRecordsModel newMedicalRecord) {
 
 		if (newMedicalRecord != null) {
-			medicalRecordRepository.saveMedicalRecord(newMedicalRecord);
-			
-			return ResponseEntity.ok("le dossier est ajouté avec succès.");
-		} else {
-			return ResponseEntity.notFound().build();
-		}
+			return medicalRecordRepository.saveMedicalRecord(newMedicalRecord);
+		} 
+		return null;
 
 	}
 
-	public ResponseEntity<String> updateMedicalRecord(MedicalRecordsModel updateMedicalRecord) throws MedicalRecordsIntrouvableException {
+	public MedicalRecordsModel updateMedicalRecord(MedicalRecordsModel updateMedicalRecord) throws MedicalRecordsIntrouvableException {
 
 		if (updateMedicalRecord != null) {
-			medicalRecordRepository.updateMedicalRecord(updateMedicalRecord);
+			
 			if(medicalRecordRepository.updateMedicalRecord(updateMedicalRecord) ==  null )throw new MedicalRecordsIntrouvableException("Le dossier de "+ updateMedicalRecord.firstName + "  " + updateMedicalRecord.lastName + " est introuvable");
-			return ResponseEntity.ok("le dossier est mis à jour avec succès.");
-		} else {
-			return ResponseEntity.notFound().build();
+			return medicalRecordRepository.updateMedicalRecord(updateMedicalRecord);
 		}
+		return null;
 	}
 
 	// supprimer une dossier
-	public ResponseEntity<String> removeMedicalRecord(String firstName, String lastName) throws MedicalRecordsIntrouvableException {
+	public MedicalRecordsModel removeMedicalRecord(String firstName, String lastName) throws MedicalRecordsIntrouvableException {
 
 		if (firstName != null && lastName != null) {
 			MedicalRecordsModel medicalRecordToDelet = medicalRecordRepository.findByfirstName(firstName, lastName);
-
 			if(medicalRecordToDelet ==  null )throw new MedicalRecordsIntrouvableException("Le dossier de "+ firstName + "  " + lastName + " est introuvable");
-			medicalRecordRepository.deleteMedicalRecordsModel(medicalRecordToDelet);
-			return ResponseEntity.ok("le dossier est supprimée avec succès.");
-		} else {
-			return ResponseEntity.notFound().build();
-		}
+			return medicalRecordRepository.deleteMedicalRecordsModel(medicalRecordToDelet); 
+		} 
+		return null ;
 	}
 }

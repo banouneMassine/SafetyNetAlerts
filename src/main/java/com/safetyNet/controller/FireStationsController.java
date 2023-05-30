@@ -38,22 +38,22 @@ public class FireStationsController {
 	}
 	
 	@PostMapping(value = "/firestation")
-	public ResponseEntity<String>   postFireStation(@RequestBody  FirestationsModel newFirestations)
+	public ResponseEntity<FirestationsModel>   postFireStation(@RequestBody  FirestationsModel newFirestations)
 	{
-		return fireStationsService.addFireStation(newFirestations);
+		return ResponseEntity.status(HttpStatus.OK).body(fireStationsService.addFireStation(newFirestations));
 	}
 	
 	
 	@PutMapping(value="/firestation")
-	public ResponseEntity<String> putFireStation(@RequestBody FirestationsModel updateFireStations) throws FireStationIntrouvableException
+	public ResponseEntity<FirestationsModel> putFireStation(@RequestBody FirestationsModel updateFireStations) throws FireStationIntrouvableException
 	{
-		return fireStationsService.updateFireStations(updateFireStations);
+		return  ResponseEntity.status(HttpStatus.OK).body(fireStationsService.updateFireStations(updateFireStations));
 	}
 	
 	@DeleteMapping(value = "/firestation/{adresse}")
-	public ResponseEntity<String> deleteFireStation(@PathVariable  String adresse) throws FireStationIntrouvableException
+	public ResponseEntity<FirestationsModel> deleteFireStation(@PathVariable  String adresse) throws FireStationIntrouvableException
 	{
-		return fireStationsService.deleteFireStations(adresse);
+		return ResponseEntity.status(HttpStatus.OK).body(fireStationsService.deleteFireStations(adresse));
 	}
 	
 

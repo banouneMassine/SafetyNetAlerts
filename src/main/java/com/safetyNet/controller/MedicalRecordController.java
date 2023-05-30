@@ -39,25 +39,25 @@ public class MedicalRecordController {
 	// Ajouter un MedicalRecord
 
 	@PostMapping(value = "/medicalRecord")
-	public ResponseEntity<String> postMedicalRecaord(@RequestBody MedicalRecordsModel newMedicalRecord) {
+	public ResponseEntity<MedicalRecordsModel> postMedicalRecaord(@RequestBody MedicalRecordsModel newMedicalRecord) {
 
-		return medicalRecordsService.addMedicalRecord(newMedicalRecord);
+		return ResponseEntity.status(HttpStatus.OK).body( medicalRecordsService.addMedicalRecord(newMedicalRecord));
 
 	}
 
 	// Modifier un MedicalRecord
 	@PutMapping(value = "/medicalRecord")
-	public ResponseEntity<String> putMedicalRecaord(@RequestBody MedicalRecordsModel updateMedicalRecord) throws MedicalRecordsIntrouvableException {
+	public ResponseEntity<MedicalRecordsModel> putMedicalRecaord(@RequestBody MedicalRecordsModel updateMedicalRecord) throws MedicalRecordsIntrouvableException {
 
-		return medicalRecordsService.updateMedicalRecord(updateMedicalRecord);
+		return ResponseEntity.status(HttpStatus.OK).body(  medicalRecordsService.updateMedicalRecord(updateMedicalRecord));
 
 	}
 
 	// Supprimer un MedicalRecord
 	@DeleteMapping(value = "/medicalRecord/{firstName}/{lastName}")
-	public ResponseEntity<String> deleteMedicalRecaord(@PathVariable String firstName, @PathVariable String lastName) throws MedicalRecordsIntrouvableException {
+	public ResponseEntity<MedicalRecordsModel> deleteMedicalRecaord(@PathVariable String firstName, @PathVariable String lastName) throws MedicalRecordsIntrouvableException {
 
-		return medicalRecordsService.removeMedicalRecord(firstName, lastName);
+		return ResponseEntity.status(HttpStatus.OK).body(medicalRecordsService.removeMedicalRecord(firstName, lastName));
 
 	}
 

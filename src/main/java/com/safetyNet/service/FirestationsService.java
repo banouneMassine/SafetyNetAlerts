@@ -18,46 +18,36 @@ public class FirestationsService {
 
 	@Autowired
 	FirestationsRepository firestationsRepository;
-	public ResponseEntity<String> addFireStation( FirestationsModel newFirestations)
+	public FirestationsModel addFireStation( FirestationsModel newFirestations)
 	{
 		if(newFirestations !=  null)
     	{
-			firestationsRepository.saveFireStation(newFirestations);
-     	    return ResponseEntity.ok("la fireStation est ajoutée avec succès.");
+			return firestationsRepository.saveFireStation(newFirestations);
     	}
-	    else 
-	    {
-	        return ResponseEntity.notFound().build();
-	    }
+	    return null ;
 	}
 	
-	public ResponseEntity<String>  updateFireStations(FirestationsModel updateFireStations) throws FireStationIntrouvableException
+	public FirestationsModel updateFireStations(FirestationsModel updateFireStations) throws FireStationIntrouvableException
 	{
 		if(updateFireStations !=  null)
     	{
 			if(firestationsRepository.updateFireStation(updateFireStations) == null) throw new FireStationIntrouvableException("La station"+ updateFireStations.address + " est introuvable ");
-			firestationsRepository.updateFireStation(updateFireStations);
-     	    return ResponseEntity.ok("la fireStation a été mise à jour avec succès.");
+			return firestationsRepository.updateFireStation(updateFireStations);
+     	  
     	}
-	    else 
-	    {
-	        return ResponseEntity.notFound().build();
-	    }
+	    return null ; 
 	}
 	
-	public ResponseEntity<String> deleteFireStations( String adresse) throws FireStationIntrouvableException
+	public FirestationsModel deleteFireStations( String adresse) throws FireStationIntrouvableException
 	{
 		if(adresse !=  null)
     	{
 			FirestationsModel FireStationToDelete =firestationsRepository.findByAdresse(adresse);
 			if(FireStationToDelete == null ) throw new FireStationIntrouvableException("La station"+ adresse + " est introuvable");
-			firestationsRepository.removeFireStation(FireStationToDelete);
-     	    return ResponseEntity.ok("la fireStation a été supprimée avec succès.");
+			return	firestationsRepository.removeFireStation(FireStationToDelete);
+     	   
     	}
-	    else 
-	    {
-	        return ResponseEntity.notFound().build();
-	    }
+	  return null ; 
 	}
 	
 	

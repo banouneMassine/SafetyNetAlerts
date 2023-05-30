@@ -11,11 +11,10 @@ public interface FirestationsRepository {
 	//CRUD
 		public List<FirestationsModel> findAll();// Get ALL Firestations
 		public FirestationsModel findByAdresse(String adresse);// Get one Firestation
-		void saveFireStation(FirestationsModel newFirestations);
+		public FirestationsModel saveFireStation(FirestationsModel newFirestations);
+		public FirestationsModel updateFireStation(FirestationsModel updateFireStations);
+		public FirestationsModel removeFireStation(FirestationsModel FireStationToDelete);
+		
+		// autres methodes
 		void addFirestation(FirestationsModel firestations);
-		FirestationsModel updateFireStation(FirestationsModel updateFireStations);
-		
-		void removeFireStation(FirestationsModel FireStationToDelete);
-		
-
 }

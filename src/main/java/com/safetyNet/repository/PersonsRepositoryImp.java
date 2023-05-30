@@ -34,18 +34,26 @@ public class PersonsRepositoryImp implements PersonsRepository {
 
 	// ajouter une personne au fichier JSON
 	@Override
-	public String save(PersonsModel person) {
+	public PersonsModel save(PersonsModel person) {
 
-		this.personsList.add(person);
-		return "La personne " + person.firstName + " " + person.lastName + " est ajoutée a la liste ";
+		 if (this.personsList.add(person))
+		 {
+			 return person; 
+		 }
+		 return null ; 
+		
 	}
 	
 
 	// supprimer une personne du fichier JSON
 	@Override
-	public void deletePerson(PersonsModel personToMDelet) 
+	public PersonsModel deletePerson(PersonsModel personToMDelet) 
 	{
-		this.personsList.remove(personToMDelet);
+		if(this.personsList.remove(personToMDelet))
+		{
+			return personToMDelet;
+		}
+		return null ; 
 	}
 	
 	// modifier une personne du fichier JSON

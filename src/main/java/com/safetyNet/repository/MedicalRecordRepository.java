@@ -12,9 +12,9 @@ public interface MedicalRecordRepository {
 	public List<MedicalRecordsModel> findAll();// Get ALL MedicalRecords
 	public MedicalRecordsModel findByfirstName(String firstName , String lastName);// Get one MedicalRecord
 
-	public void saveMedicalRecord(MedicalRecordsModel newMedicalRecord );
+	public MedicalRecordsModel saveMedicalRecord(MedicalRecordsModel newMedicalRecord );
 	public MedicalRecordsModel updateMedicalRecord(MedicalRecordsModel MedicalRecordModify);
-	public void deleteMedicalRecordsModel(MedicalRecordsModel MedicalRecordDelete );
+	public MedicalRecordsModel deleteMedicalRecordsModel(MedicalRecordsModel MedicalRecordDelete );
 	
 	//autre
 	public void addMedicalRecord(MedicalRecordsModel MedicalRecord);

@@ -29,49 +29,41 @@ public class PersonsService {
 	}
 
 	// ajouter une personne 
-	public Person addPerson(PersonsModel person) {
+	public PersonsModel addPerson(PersonsModel person) {
 		
 		if(person !=  null)
     	{	
-		   personsRepository.save(person);
-     	   return ResponseEntity.ok("la personne est ajoutée avec succès.");
+			return   personsRepository.save(person);
+     	 
     	}
-	    else 
-	    {
-	        return ResponseEntity.notFound().build();
-	    }
+		return null ;
+	  
 	}
 
 	// supprimer une personne 
-	public ResponseEntity<String> removePerson(String firstName, String lastName) throws PersonIntrovableExeption {
+	public PersonsModel removePerson(String firstName, String lastName) throws PersonIntrovableExeption {
 
 		if(firstName != null && lastName != null)
     	{
 			PersonsModel personToMDelet = personsRepository.findByfirstName(firstName, lastName);
 			if(personToMDelet == null) throw new PersonIntrovableExeption("La personne " +firstName+ " "+ lastName + " est introuvable");
-			personsRepository.deletePerson(personToMDelet);
-			return ResponseEntity.ok("la personne est supprimée avec succès.");
+			return	personsRepository.deletePerson(personToMDelet);
     	}
-	    else 
-	    {
-	        return ResponseEntity.notFound().build();
-	    }
+		return null ;
 	}
 
 	//modifier une personne
-	public ResponseEntity<String> updatePerson(PersonsModel  newPreson) throws PersonIntrovableExeption 
+	public PersonsModel updatePerson(PersonsModel  newPreson) throws PersonIntrovableExeption 
 	{
 		
 		if(newPreson != null )
     	{
-			personsRepository.updatePerson(newPreson);
+			
 			if(personsRepository.updatePerson(newPreson) == null) throw new PersonIntrovableExeption("La personne " +newPreson.firstName+ " "+ newPreson.lastName + " est introuvable");
-     	   return ResponseEntity.ok("Les informations de la personne sont mises à jour avec succès.");
+     	   return personsRepository.updatePerson(newPreson);
     	}
-	    else 
-	    {
-	        return ResponseEntity.notFound().build();
-	    }
+		return null ; 
+	    
 	}
 
 }

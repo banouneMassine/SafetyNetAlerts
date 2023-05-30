@@ -36,7 +36,7 @@ public class PersonsController {
 
 	// ajouter une personne au fichier JSON
 	@PostMapping(value = "/person")
-	public ResponseEntity<String> postPerson(@RequestBody PersonsModel preson) {
+	public ResponseEntity<PersonsModel> postPerson(@RequestBody PersonsModel preson) {
 
 		return ResponseEntity.status(HttpStatus.OK).body(personsService.addPerson(preson));
 
@@ -44,17 +44,17 @@ public class PersonsController {
 
 	// supprimer une personne du fichier JSON
 	@DeleteMapping(value = "/person/{firstName}/{lastName}")
-	public ResponseEntity<String> deletePerson(@PathVariable String firstName, @PathVariable String lastName) throws PersonIntrovableExeption {
+	public ResponseEntity<PersonsModel> deletePerson(@PathVariable String firstName, @PathVariable String lastName) throws PersonIntrovableExeption {
 
-		return personsService.removePerson(firstName, lastName);
+		return ResponseEntity.status(HttpStatus.OK).body( personsService.removePerson(firstName, lastName));
 
 	}
 
 	// Modifier une personne du fichier JSON
 	@PutMapping(value = "/person")
-	public ResponseEntity<String> putPerson(@RequestBody PersonsModel newPreson) throws PersonIntrovableExeption {
+	public ResponseEntity<PersonsModel> putPerson(@RequestBody PersonsModel newPreson) throws PersonIntrovableExeption {
 
-		return personsService.updatePerson(newPreson);
+		return ResponseEntity.status(HttpStatus.OK).body(personsService.updatePerson(newPreson));
 
 	}
 }

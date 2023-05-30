@@ -38,9 +38,14 @@ public class FirestationsRepositoryImp implements FirestationsRepository {
 	}
 	
 	@Override 
-	public void  saveFireStation( FirestationsModel newFirestations)
+	public FirestationsModel  saveFireStation( FirestationsModel newFirestations)
 	{
-		this.listOfFireStations.add(newFirestations);
+		if(this.listOfFireStations.add(newFirestations))
+		{
+			return newFirestations ;
+		}
+		return null ; 
+		 
 	}
 	
 	@Override
@@ -57,10 +62,14 @@ public class FirestationsRepositoryImp implements FirestationsRepository {
 	}
 	
 	@Override
-	public void removeFireStation(FirestationsModel FireStationToDelete)
+	public FirestationsModel removeFireStation(FirestationsModel FireStationToDelete)
 	{
-	
-		this.listOfFireStations.remove(FireStationToDelete);
+		
+		 if( this.listOfFireStations.remove(FireStationToDelete))
+		 {
+			 return FireStationToDelete ; 
+		 }
+		 return null ; 
 	}
 
 }
