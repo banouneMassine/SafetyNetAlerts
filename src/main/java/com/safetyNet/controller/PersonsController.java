@@ -38,7 +38,7 @@ public class PersonsController {
 	@PostMapping(value = "/person")
 	public ResponseEntity<String> postPerson(@RequestBody PersonsModel preson) {
 
-		return personsService.addPerson(preson);
+		return ResponseEntity.status(HttpStatus.OK).body(personsService.addPerson(preson));
 
 	}
 

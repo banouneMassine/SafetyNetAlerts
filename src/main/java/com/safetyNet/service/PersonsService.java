@@ -29,7 +29,7 @@ public class PersonsService {
 	}
 
 	// ajouter une personne 
-	public ResponseEntity<String> addPerson(PersonsModel person) {
+	public Person addPerson(PersonsModel person) {
 		
 		if(person !=  null)
     	{	
