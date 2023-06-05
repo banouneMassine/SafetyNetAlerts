@@ -28,7 +28,7 @@ public class FirestationsRepositoryImp implements FirestationsRepository {
 	public FirestationsModel findByAdresse(String adresse) {
 		for(FirestationsModel fireStation : this.listOfFireStations)
 		{
-			if(fireStation.address.equalsIgnoreCase(adresse))
+			if(fireStation.getAddress().equalsIgnoreCase(adresse))
 			{
 				return fireStation;
 			}
@@ -51,10 +51,10 @@ public class FirestationsRepositoryImp implements FirestationsRepository {
 	@Override
 	public FirestationsModel updateFireStation(FirestationsModel updateFireStations)
 	{
-		FirestationsModel FireStationsToModify = this.findByAdresse(updateFireStations.address);
+		FirestationsModel FireStationsToModify = this.findByAdresse(updateFireStations.getAddress());
 		if(FireStationsToModify != null )
 		{
-			FireStationsToModify.station= updateFireStations.station;
+			FireStationsToModify.setStation(updateFireStations.getStation());
 			return FireStationsToModify;
 		}
 		return null ;

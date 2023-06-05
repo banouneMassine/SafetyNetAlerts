@@ -15,4 +15,5 @@ public interface PersonsRepository {
 	
 	//autres methodes
 	public void addPerson(PersonsModel person);
+	List<PersonsModel> getFamilles(PersonsModel person);
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.safetyNet.DTO.FireStationsDTO;
 import com.safetyNet.exceptions.FireStationIntrouvableException;
 import com.safetyNet.model.FirestationsModel;
 import com.safetyNet.service.FirestationsService;
@@ -25,7 +26,7 @@ public class FireStationsController {
 	FirestationsService fireStationsService ;
 	
 	@GetMapping("/firestationAll")
-	public ResponseEntity<List<FirestationsModel>> getFireStationsAll() throws FireStationIntrouvableException
+	public ResponseEntity<List<FireStationsDTO>> getFireStationsAll() throws FireStationIntrouvableException
 	{
 		
 		return ResponseEntity.status(HttpStatus.OK).body(fireStationsService.getFireStations());
@@ -38,20 +39,20 @@ public class FireStationsController {
 	}
 	
 	@PostMapping(value = "/firestation")
-	public ResponseEntity<FirestationsModel>   postFireStation(@RequestBody  FirestationsModel newFirestations)
+	public ResponseEntity<FireStationsDTO>   postFireStation(@RequestBody  FirestationsModel newFirestations)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(fireStationsService.addFireStation(newFirestations));
 	}
 	
 	
 	@PutMapping(value="/firestation")
-	public ResponseEntity<FirestationsModel> putFireStation(@RequestBody FirestationsModel updateFireStations) throws FireStationIntrouvableException
+	public ResponseEntity<FireStationsDTO> putFireStation(@RequestBody FirestationsModel updateFireStations) throws FireStationIntrouvableException
 	{
 		return  ResponseEntity.status(HttpStatus.OK).body(fireStationsService.updateFireStations(updateFireStations));
 	}
 	
 	@DeleteMapping(value = "/firestation/{adresse}")
-	public ResponseEntity<FirestationsModel> deleteFireStation(@PathVariable  String adresse) throws FireStationIntrouvableException
+	public ResponseEntity<FireStationsDTO> deleteFireStation(@PathVariable  String adresse) throws FireStationIntrouvableException
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(fireStationsService.deleteFireStations(adresse));
 	}
