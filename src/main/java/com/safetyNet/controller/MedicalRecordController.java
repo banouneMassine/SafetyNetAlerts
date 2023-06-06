@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.safetyNet.DTO.MedicalRecordsDTO;
 import com.safetyNet.exceptions.MedicalRecordsIntrouvableException;
 import com.safetyNet.model.MedicalRecordsModel;
 import com.safetyNet.service.MedicalRecordsService;
@@ -25,13 +26,13 @@ public class MedicalRecordController {
 
 	// Recuperer tous les MedicalRecords
 	@GetMapping("/medicalRecordALL")
-	public ResponseEntity<List<MedicalRecordsModel>> getMedicalRecordsAll() throws MedicalRecordsIntrouvableException {
+	public ResponseEntity<List<MedicalRecordsDTO>> getMedicalRecordsAll() throws MedicalRecordsIntrouvableException {
 		return ResponseEntity.status(HttpStatus.OK).body(medicalRecordsService.getMedicalRecords());
 	}
 
 	// Recuperer un MedicalRecord
 	@GetMapping("/medicalRecord/{firstName}/{lastName}")
-	public ResponseEntity<MedicalRecordsModel> getMedicalRecond(@PathVariable String firstName,
+	public ResponseEntity<MedicalRecordsDTO> getMedicalRecond(@PathVariable String firstName,
 			@PathVariable String lastName) throws MedicalRecordsIntrouvableException {
 		return ResponseEntity.status(HttpStatus.OK).body(medicalRecordsService.getMedicalRecord(firstName, lastName));
 	}
@@ -39,7 +40,7 @@ public class MedicalRecordController {
 	// Ajouter un MedicalRecord
 
 	@PostMapping(value = "/medicalRecord")
-	public ResponseEntity<MedicalRecordsModel> postMedicalRecaord(@RequestBody MedicalRecordsModel newMedicalRecord) {
+	public ResponseEntity<MedicalRecordsDTO> postMedicalRecaord(@RequestBody MedicalRecordsModel newMedicalRecord) {
 
 		return ResponseEntity.status(HttpStatus.OK).body( medicalRecordsService.addMedicalRecord(newMedicalRecord));
 
@@ -47,7 +48,7 @@ public class MedicalRecordController {
 
 	// Modifier un MedicalRecord
 	@PutMapping(value = "/medicalRecord")
-	public ResponseEntity<MedicalRecordsModel> putMedicalRecaord(@RequestBody MedicalRecordsModel updateMedicalRecord) throws MedicalRecordsIntrouvableException {
+	public ResponseEntity<MedicalRecordsDTO> putMedicalRecaord(@RequestBody MedicalRecordsModel updateMedicalRecord) throws MedicalRecordsIntrouvableException {
 
 		return ResponseEntity.status(HttpStatus.OK).body(  medicalRecordsService.updateMedicalRecord(updateMedicalRecord));
 
@@ -55,7 +56,7 @@ public class MedicalRecordController {
 
 	// Supprimer un MedicalRecord
 	@DeleteMapping(value = "/medicalRecord/{firstName}/{lastName}")
-	public ResponseEntity<MedicalRecordsModel> deleteMedicalRecaord(@PathVariable String firstName, @PathVariable String lastName) throws MedicalRecordsIntrouvableException {
+	public ResponseEntity<MedicalRecordsDTO> deleteMedicalRecaord(@PathVariable String firstName, @PathVariable String lastName) throws MedicalRecordsIntrouvableException {
 
 		return ResponseEntity.status(HttpStatus.OK).body(medicalRecordsService.removeMedicalRecord(firstName, lastName));
 

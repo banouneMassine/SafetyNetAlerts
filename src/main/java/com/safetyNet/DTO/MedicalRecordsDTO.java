@@ -1,5 +1,4 @@
-package com.safetyNet.model;
-
+package com.safetyNet.DTO;
 
 import java.util.List;
 
@@ -7,8 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 
-
-public class MedicalRecordsModel {
+public class MedicalRecordsDTO {
 	@JsonProperty("firstName")
 	public String firstName ;
 	
@@ -23,7 +21,7 @@ public class MedicalRecordsModel {
 	
 	@JsonProperty("allergies")
 	public List<String> allergies ;
-
+	
 	public String getFirstName() {
 		return firstName;
 	}
@@ -63,4 +61,6 @@ public class MedicalRecordsModel {
 	public void setAllergies(List<String> allergies) {
 		this.allergies = allergies;
 	}
+
+	
 }

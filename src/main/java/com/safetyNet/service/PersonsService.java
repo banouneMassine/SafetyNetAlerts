@@ -1,39 +1,47 @@
 package com.safetyNet.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+
 import org.springframework.stereotype.Service;
 
+import com.safetyNet.DTO.PersonsDTO;
 import com.safetyNet.exceptions.PersonIntrovableExeption;
 import com.safetyNet.model.PersonsModel;
 import com.safetyNet.repository.PersonsRepository;
 
-import lombok.Data;
 
-@Data
+
+
 @Service
 public class PersonsService {
 	@Autowired
 	PersonsRepository personsRepository;
 
-	public List<PersonsModel> getPersons() throws PersonIntrovableExeption {
+	public List<PersonsDTO> getPersons() throws PersonIntrovableExeption {
 		if(personsRepository.findAll().isEmpty()) throw new PersonIntrovableExeption("La liste des personnes est vide");
-		return personsRepository.findAll();
+		List<PersonsDTO> listPersonsDTO = new ArrayList<>();
+		for(PersonsModel person : personsRepository.findAll())
+		{
+			listPersonsDTO.add(this.convertToDTO(person));
+		}
+		
+		return listPersonsDTO;
 	}
 
-	public PersonsModel getPerson(String firstName, String lastName) throws PersonIntrovableExeption {
-		if(personsRepository.findByfirstName(firstName, lastName) == null) throw new PersonIntrovableExeption("La personne " +firstName+ " "+ lastName + " est introuvable");
-		return personsRepository.findByfirstName(firstName, lastName);
+	public PersonsDTO getPerson(String firstName, String lastName) throws PersonIntrovableExeption {
+		if(personsRepository.findByName(firstName, lastName) == null) throw new PersonIntrovableExeption("La personne " +firstName+ " "+ lastName + " est introuvable");
+		return this.convertToDTO(personsRepository.findByName(firstName, lastName))  ;
 	}
 
 	// ajouter une personne 
-	public PersonsModel addPerson(PersonsModel person) {
+	public PersonsDTO addPerson(PersonsModel person) {
 		
 		if(person !=  null)
     	{	
-			return   personsRepository.save(person);
+			return   this.convertToDTO(personsRepository.save(person));
      	 
     	}
 		return null ;
@@ -41,29 +49,42 @@ public class PersonsService {
 	}
 
 	// supprimer une personne 
-	public PersonsModel removePerson(String firstName, String lastName) throws PersonIntrovableExeption {
+	public PersonsDTO removePerson(String firstName, String lastName) throws PersonIntrovableExeption {
 
 		if(firstName != null && lastName != null)
     	{
-			PersonsModel personToMDelet = personsRepository.findByfirstName(firstName, lastName);
+			PersonsModel personToMDelet = personsRepository.findByName(firstName, lastName);
 			if(personToMDelet == null) throw new PersonIntrovableExeption("La personne " +firstName+ " "+ lastName + " est introuvable");
-			return	personsRepository.deletePerson(personToMDelet);
+			return	this.convertToDTO(personsRepository.deletePerson(personToMDelet));
     	}
 		return null ;
 	}
 
 	//modifier une personne
-	public PersonsModel updatePerson(PersonsModel  newPreson) throws PersonIntrovableExeption 
+	public PersonsDTO updatePerson(PersonsModel  newPreson) throws PersonIntrovableExeption 
 	{
 		
 		if(newPreson != null )
     	{
 			
 			if(personsRepository.updatePerson(newPreson) == null) throw new PersonIntrovableExeption("La personne " +newPreson.firstName+ " "+ newPreson.lastName + " est introuvable");
-     	   return personsRepository.updatePerson(newPreson);
+     	   return this.convertToDTO(personsRepository.updatePerson(newPreson));
     	}
 		return null ; 
 	    
+	}
+	
+	public PersonsDTO convertToDTO(PersonsModel personsModel)
+	{
+		PersonsDTO personsDTO = new PersonsDTO();
+		personsDTO.setFirstName(personsModel.getFirstName()) ;
+		personsDTO.setLastName( personsModel.getLastName());
+		personsDTO.setAddress( personsModel.getAddress());
+		personsDTO.setCity( personsModel.getCity());
+		personsDTO.setEmail( personsModel.getEmail());
+		personsDTO.setPhone( personsModel.getPhone());
+		personsDTO.setZip( personsModel.getZip());
+		return personsDTO ; 
 	}
 
 }

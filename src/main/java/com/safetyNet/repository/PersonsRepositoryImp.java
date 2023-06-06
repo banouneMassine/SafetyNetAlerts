@@ -22,15 +22,40 @@ public class PersonsRepositoryImp implements PersonsRepository {
 	}
 
 	@Override
-	public PersonsModel findByfirstName(String firstName , String lastName) {
+	public PersonsModel findByName(String firstName , String lastName) {
 
 		for (PersonsModel person : this.personsList) {
-			if (person.firstName.equalsIgnoreCase(firstName) && person.lastName.equalsIgnoreCase(lastName)) {
+			if (person.getFirstName().equalsIgnoreCase(firstName) && person.getLastName().equalsIgnoreCase(lastName)) {
 				return person;
 			}
 		}
 		return null;
 	}
+	
+	@Override
+	public List<PersonsModel> findByAdresse( String adresse)
+	{
+		List<PersonsModel> listDespersonnesByAdresse = new ArrayList<>();
+		for (PersonsModel person : this.personsList) {
+			if (person.getAddress().equalsIgnoreCase(adresse)) {
+				listDespersonnesByAdresse.add(person);
+			}
+		}
+		return listDespersonnesByAdresse;
+	}
+	
+	@Override 
+	public List<PersonsModel> getFamilles( PersonsModel person)
+	{
+		List<PersonsModel> listDesPersonnesDeLaFamille = new ArrayList<>();
+		for (PersonsModel fammille : this.personsList) {
+			if (fammille.getLastName().equalsIgnoreCase(person.getLastName()) && !fammille.getFirstName().equalsIgnoreCase(person.getFirstName())) {
+				 listDesPersonnesDeLaFamille.add(fammille);
+			}
+		}
+		
+		return listDesPersonnesDeLaFamille ; 	
+		}
 
 	// ajouter une personne au fichier JSON
 	@Override
@@ -60,14 +85,14 @@ public class PersonsRepositoryImp implements PersonsRepository {
 	@Override
 	public PersonsModel updatePerson(PersonsModel newPreson) 
 	{
-			PersonsModel personSearche= this.findByfirstName(newPreson.firstName, newPreson.lastName);
+			PersonsModel personSearche= this.findByName(newPreson.firstName, newPreson.lastName);
 			if (personSearche != null)
 			{
-				personSearche.address=newPreson.address;
-				personSearche.city=newPreson.city;
-				personSearche.zip=newPreson.zip;
-				personSearche.email=newPreson.email;
-				personSearche.phone=newPreson.phone;
+				personSearche.setAddress(newPreson.getAddress());
+				personSearche.setCity(newPreson.getCity());
+				personSearche.setZip(newPreson.getZip());
+				personSearche.setEmail(newPreson.getEmail());
+				personSearche.setPhone(newPreson.getPhone());
 				return newPreson ; 
 			}
 			

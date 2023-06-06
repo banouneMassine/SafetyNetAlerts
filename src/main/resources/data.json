@@ -1,7 +1,8 @@
 
 
 {
-    "persons": [ {
+    "persons": [ 
+		{
         "firstName": "John",
         "lastName": "Boyd",
         "address": "1509 Culver St",
@@ -210,7 +211,7 @@
       }
      
     ],
-    "firestations": [
+"firestations": [
       {
         "address": "1509 Culver St",
         "station": "3"
@@ -267,7 +268,7 @@
     "medicalrecords": [{
         "firstName": "John",
         "lastName": "Boyd",
-        "birthdate": "03/06/1984",
+        "birthdate": "03/06/2007",
         "medications": [
           "aznol:350mg",
           "hydrapermazol:100mg"
@@ -279,7 +280,7 @@
       {
         "firstName": "Jacob",
         "lastName": "Boyd",
-        "birthdate": "03/06/1989",
+        "birthdate": "03/06/2009",
         "medications": [
           "pharmacol:5000mg",
           "terazine:10mg",
@@ -292,7 +293,7 @@
       {
         "firstName": "Tenley",
         "lastName": "Boyd",
-        "birthdate": "02/18/2012",
+        "birthdate": "02/08/2012",
         "medications": [
           
         ],
@@ -336,7 +337,7 @@
       {
         "firstName": "Tessa",
         "lastName": "Carman",
-        "birthdate": "02/18/2012",
+        "birthdate": "02/08/2012",
         "medications": [
           
         ],
@@ -430,7 +431,7 @@
       {
         "firstName": "Reginold",
         "lastName": "Walker",
-        "birthdate": "08/30/1979",
+        "birthdate": "08/10/1979",
         "medications": [
           "thradox:700mg"
         ],
@@ -463,7 +464,7 @@
       {
         "firstName": "Allison",
         "lastName": "Boyd",
-        "birthdate": "03/15/1965",
+        "birthdate": "03/12/1965",
         "medications": [
           "aznol:200mg"
         ],
@@ -486,7 +487,7 @@
       {
         "firstName": "Shawna",
         "lastName": "Stelzer",
-        "birthdate": "07/08/1980",
+        "birthdate": "07/08/2015",
         "medications": [
           
         ],

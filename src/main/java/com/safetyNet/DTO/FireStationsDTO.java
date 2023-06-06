@@ -1,17 +1,14 @@
-package com.safetyNet.model;
+package com.safetyNet.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.Data;
-
-@Data
-public class FirestationsModel {
-	
+public class FireStationsDTO {
 	@JsonProperty("address")
 	public String address;
+	
 	@JsonProperty("station")
 	public int station ;
-	
+
 	public String getAddress() {
 		return address;
 	}
@@ -27,8 +24,4 @@ public class FirestationsModel {
 	public void setStation(int station) {
 		this.station = station;
 	}
-
-	
-	
-
 }

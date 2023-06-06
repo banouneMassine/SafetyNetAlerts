@@ -26,7 +26,7 @@ public class MedicalRecordRepositoryImp implements MedicalRecordRepository{
 		
 		for (MedicalRecordsModel medicalRecordIteration : this.MedicalRecordsList )
 		{
-			if(medicalRecordIteration.firstName.equalsIgnoreCase(firstName) && medicalRecordIteration.lastName.equalsIgnoreCase(lastName))
+			if(medicalRecordIteration.getFirstName().equalsIgnoreCase(firstName) && medicalRecordIteration.getLastName().equalsIgnoreCase(lastName))
 			{
 				return medicalRecordIteration;
 			}
@@ -45,10 +45,10 @@ public class MedicalRecordRepositoryImp implements MedicalRecordRepository{
 
 	@Override
 	public MedicalRecordsModel updateMedicalRecord(MedicalRecordsModel MedicalRecordModify) {
-		MedicalRecordsModel medicalRecordsSearche = this.findByfirstName(MedicalRecordModify.firstName, MedicalRecordModify.lastName);
+		MedicalRecordsModel medicalRecordsSearche = this.findByfirstName(MedicalRecordModify.getFirstName(), MedicalRecordModify.getLastName());
 		if (medicalRecordsSearche != null)
 		{
-			medicalRecordsSearche.birthdate= MedicalRecordModify.birthdate;
+			medicalRecordsSearche.setBirthdate(MedicalRecordModify.getBirthdate());
 			return medicalRecordsSearche;
 		}
 		return null ;
