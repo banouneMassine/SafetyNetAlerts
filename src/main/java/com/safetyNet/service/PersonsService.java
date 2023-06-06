@@ -32,8 +32,8 @@ public class PersonsService {
 	}
 
 	public PersonsDTO getPerson(String firstName, String lastName) throws PersonIntrovableExeption {
-		if(personsRepository.findByfirstName(firstName, lastName) == null) throw new PersonIntrovableExeption("La personne " +firstName+ " "+ lastName + " est introuvable");
-		return this.convertToDTO(personsRepository.findByfirstName(firstName, lastName))  ;
+		if(personsRepository.findByName(firstName, lastName) == null) throw new PersonIntrovableExeption("La personne " +firstName+ " "+ lastName + " est introuvable");
+		return this.convertToDTO(personsRepository.findByName(firstName, lastName))  ;
 	}
 
 	// ajouter une personne 
@@ -53,7 +53,7 @@ public class PersonsService {
 
 		if(firstName != null && lastName != null)
     	{
-			PersonsModel personToMDelet = personsRepository.findByfirstName(firstName, lastName);
+			PersonsModel personToMDelet = personsRepository.findByName(firstName, lastName);
 			if(personToMDelet == null) throw new PersonIntrovableExeption("La personne " +firstName+ " "+ lastName + " est introuvable");
 			return	this.convertToDTO(personsRepository.deletePerson(personToMDelet));
     	}

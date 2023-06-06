@@ -17,4 +17,5 @@ public interface FirestationsRepository {
 		
 		// autres methodes
 		void addFirestation(FirestationsModel firestations);
+		List<FirestationsModel> findByStationNumber(int stationNumber);
 }

@@ -37,6 +37,20 @@ public class FirestationsRepositoryImp implements FirestationsRepository {
 		return null;
 	}
 	
+	@Override
+	public List<FirestationsModel> findByStationNumber(int stationNumber) {
+		List<FirestationsModel> listDeStation = new ArrayList<>();
+		for(FirestationsModel fireStation : this.listOfFireStations)
+		{
+			if(fireStation.getStation() == stationNumber)
+			{
+				listDeStation.add(fireStation);
+			}
+				
+		}
+		return listDeStation;
+	}
+	
 	@Override 
 	public FirestationsModel  saveFireStation( FirestationsModel newFirestations)
 	{

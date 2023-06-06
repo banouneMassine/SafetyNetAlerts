@@ -9,6 +9,8 @@ public class FirestationsModel {
 	
 	@JsonProperty("address")
 	public String address;
+	@JsonProperty("station")
+	public int station ;
 	
 	public String getAddress() {
 		return address;
@@ -26,8 +28,7 @@ public class FirestationsModel {
 		this.station = station;
 	}
 
-	@JsonProperty("station")
-	public int station ;
+	
 	
 
 }

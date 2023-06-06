@@ -22,7 +22,7 @@ public class PersonsRepositoryImp implements PersonsRepository {
 	}
 
 	@Override
-	public PersonsModel findByfirstName(String firstName , String lastName) {
+	public PersonsModel findByName(String firstName , String lastName) {
 
 		for (PersonsModel person : this.personsList) {
 			if (person.getFirstName().equalsIgnoreCase(firstName) && person.getLastName().equalsIgnoreCase(lastName)) {
@@ -30,6 +30,18 @@ public class PersonsRepositoryImp implements PersonsRepository {
 			}
 		}
 		return null;
+	}
+	
+	@Override
+	public List<PersonsModel> findByAdresse( String adresse)
+	{
+		List<PersonsModel> listDespersonnesByAdresse = new ArrayList<>();
+		for (PersonsModel person : this.personsList) {
+			if (person.getAddress().equalsIgnoreCase(adresse)) {
+				listDespersonnesByAdresse.add(person);
+			}
+		}
+		return listDespersonnesByAdresse;
 	}
 	
 	@Override 
@@ -73,7 +85,7 @@ public class PersonsRepositoryImp implements PersonsRepository {
 	@Override
 	public PersonsModel updatePerson(PersonsModel newPreson) 
 	{
-			PersonsModel personSearche= this.findByfirstName(newPreson.firstName, newPreson.lastName);
+			PersonsModel personSearche= this.findByName(newPreson.firstName, newPreson.lastName);
 			if (personSearche != null)
 			{
 				personSearche.setAddress(newPreson.getAddress());

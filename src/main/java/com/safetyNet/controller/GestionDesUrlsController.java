@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.safetyNet.DTO.ChildDTO;
 import com.safetyNet.DTO.EmailByCityDTO;
+import com.safetyNet.DTO.FireDTO;
+import com.safetyNet.DTO.FloodDTO;
+import com.safetyNet.DTO.PersonInfoDTO;
 import com.safetyNet.DTO.PersonsCoveredByTheFirestationDTO;
 import com.safetyNet.DTO.PhoneNumberByStationNumberDTO;
 import com.safetyNet.service.GestionDesUrlsService;
@@ -43,11 +46,33 @@ public class GestionDesUrlsController {
 		return ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getListofNumber(stationNumber));
 	}
 	
+	//Cette url doit retourner la liste des habitants vivant à l’adresse donnée ainsi que le numéro de la caserne de pompiers la desservant
+	@GetMapping("/fire")
+	public ResponseEntity<List<FireDTO>> listOfPersonsWithFireStationByAdresse(@RequestParam("address") String address)
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getListOfPersonAndFirestation(address));
+	}
+	
+	
+	//Cette url doit retourner une liste de tous les foyers desservis par la caserne.
+	@GetMapping("/flood")
+	public ResponseEntity<List<FloodDTO>> listOFHomesServedByFireStations(@RequestParam("stations") List<Integer> station)
+	{
+		return  ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getListOfServedByFireStations(station));
+	}
+	
+	
 	
 	//Cette url doit retourner les adresses mail de tous les habitants de la ville.
 	@GetMapping("/communityEmail")
 	public ResponseEntity<List<EmailByCityDTO>> listOfEmailByCity(@RequestParam("city") String city)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getListOFEmail(city));
+	}
+	
+	@GetMapping("/personInfo")
+	public  ResponseEntity<PersonInfoDTO> listOfPersonInfos(@RequestParam("firstName") String firstName , @RequestParam("lastName")  String lastName)
+	{
+		return ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getPersonInfos(firstName , lastName));
 	}
 }
