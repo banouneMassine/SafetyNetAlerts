@@ -25,13 +25,14 @@ public class PersonsController {
 	private PersonsService personsService;
 
 	@GetMapping("/personALL")
-	public ResponseEntity<List<PersonsDTO>> getPersonsALL() throws PersonIntrovableExeption {
-		
+	public ResponseEntity<List<PersonsDTO>> getPersonsALL() throws PersonIntrovableExeption  {
+		if(personsService.getPersons().isEmpty()== true)throw new PersonIntrovableExeption("La liste des personnes est vide coucou");
 		return ResponseEntity.status(HttpStatus.OK).body(personsService.getPersons());
 	}
 
 	@GetMapping("/person/{firstName}/{lastName}")
 	public ResponseEntity<PersonsDTO> getPerson(@PathVariable String firstName, @PathVariable String lastName) throws PersonIntrovableExeption {
+		if(personsService.getPerson(firstName, lastName)== null)  throw new PersonIntrovableExeption("La personne " +firstName+ " "+ lastName + " est introuvable");
 		return ResponseEntity.status(HttpStatus.OK).body(personsService.getPerson(firstName, lastName));
 	}
 

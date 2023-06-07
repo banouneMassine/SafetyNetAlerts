@@ -36,9 +36,12 @@ public class PersonsRepositoryImp implements PersonsRepository {
 	public List<PersonsModel> findByAdresse( String adresse)
 	{
 		List<PersonsModel> listDespersonnesByAdresse = new ArrayList<>();
-		for (PersonsModel person : this.personsList) {
-			if (person.getAddress().equalsIgnoreCase(adresse)) {
+		for (PersonsModel person : this.personsList) 
+		{
+			if(person.getAddress().equalsIgnoreCase(adresse)) 
+			{
 				listDespersonnesByAdresse.add(person);
+				
 			}
 		}
 		return listDespersonnesByAdresse;

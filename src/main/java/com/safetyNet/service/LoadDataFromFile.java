@@ -3,7 +3,8 @@ package com.safetyNet.service;
 import java.io.File;
 import java.io.IOException;
 
-
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -33,16 +34,17 @@ public class LoadDataFromFile implements LoadData {
 	@Autowired
 	private FirestationsRepository firestationsRepository ;
 	
-	
+	private static final Logger logger = LogManager.getLogger("LoadDataFromFile");
 	
 	@Value("${json.file.path}")
     private String jsonFilePath;
 	
 	private final ObjectMapper objectMapper = new ObjectMapper();
-
+	
 	@Override
 	@PostConstruct
 	public void getData() {
+		logger.info("Importer les données du fichier json");
 		File jsonFile = new File(jsonFilePath);
 		JsonNode jsonNode = null;
 		try {
@@ -54,6 +56,7 @@ public class LoadDataFromFile implements LoadData {
 				
 		} catch (IOException e) {
 			e.printStackTrace();
+			logger.error("erreur de récupérartion des données json");
 		}
 		
 	}

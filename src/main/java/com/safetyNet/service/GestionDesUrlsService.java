@@ -6,6 +6,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,8 @@ import com.safetyNet.repository.PersonsRepository;
 @Service
 public class GestionDesUrlsService {
 
+	private static final Logger logger = LogManager.getLogger("GestionDesUrlsService");
+	
 	@Autowired
 	PersonsRepository personsRepository;
 
@@ -41,11 +45,7 @@ public class GestionDesUrlsService {
 
 	// Cette url doit retourner une liste des personnes couvertes par la caserne de
 	// pompiers correspondante
-	public List<PersonsCoveredByTheFirestationDTO> getListOfPeopleCoveredByTheFirestation(int stationNumber) // il reste
-																												// des
-																												// choses
-																												// a
-																												// ajouté
+	public List<PersonsCoveredByTheFirestationDTO> getListOfPeopleCoveredByTheFirestation(int stationNumber) // il reste des choses a ajouté																										
 	{
 		listDesPersonnes = personsRepository.findAll();
 		listDeStation = firestationsRepository.findByStationNumber(stationNumber);
@@ -65,6 +65,7 @@ public class GestionDesUrlsService {
 			}
 
 		}
+		logger.info("Récuperer la liste des personnes couvertes par la caserne de pompiers numéro "+ stationNumber);
 		return listDesPersonnesCorrespondants;
 	}
 
@@ -91,7 +92,7 @@ public class GestionDesUrlsService {
 			}
 
 		}
-
+		logger.info("Récuperer la liste d'enfants habitant à l'adresse "+ address);
 		return listDesEnfantsCorrespondants;
 	}
 
@@ -107,6 +108,7 @@ public class GestionDesUrlsService {
 			phoneNumberByStationNumberDTO.setPhone(personsCoveredByTheFirestationDTO.getPhone());
 			listDesNumurosCorrespondants.add(phoneNumberByStationNumberDTO);
 		}
+		logger.info("Récuperer la liste des numéros de téléphone des résidents desservis par la caserne de pompiers numéro "+ stationNumber);
 		return listDesNumurosCorrespondants;
 	}
 
@@ -136,7 +138,7 @@ public class GestionDesUrlsService {
 
 			}
 		}
-
+		logger.info("Récuperer la liste des habitants vivant à l’adresse "+ adresse + " ainsi que le numéro de la caserne de pompiers la desservant ");
 		return listdesHabitants;
 
 	}
@@ -149,7 +151,7 @@ public class GestionDesUrlsService {
 			listDesPersonnes = personsRepository.findAll();
 			listDesDossiers = medicalRecordRepository.findAll();
 
-			// List<FireDTO> listdesHabitants = new ArrayList<>();
+			
 			List<FloodDTO> listdesFoyer = new ArrayList<>();
 			for (FirestationsModel fireStation : listDeStation) {
 				FloodDTO floodDTO = new FloodDTO();
@@ -185,6 +187,7 @@ public class GestionDesUrlsService {
 				listdesFoyer.add(floodDTO);
 
 			}
+			logger.info("Récuperer la liste de tous les foyers desservis par les casernes "+ stations);
 			return listdesFoyer;
 		}
 		return null;
@@ -196,6 +199,7 @@ public class GestionDesUrlsService {
 		PersonsModel person = personsRepository.findByName(firstName,lastName);
 		List<PersonsModel> familles = personsRepository.getFamilles(person);
 		listDesDossiers = medicalRecordRepository.findAll();
+		logger.info("Récuperer les information de la personne " +firstName+ "  "+ lastName );
 		for(MedicalRecordsModel medicalRecord : listDesDossiers)
 		{
 			if(person.getFirstName().equalsIgnoreCase(medicalRecord.getFirstName()) && person.getLastName().equalsIgnoreCase(medicalRecord.getLastName()))
@@ -228,6 +232,7 @@ public class GestionDesUrlsService {
 				listDesEmailCorrespondants.add(emailByCityDTO);
 			}
 		}
+		logger.info("Récuperer la liste des  adresses mails de tous les habitants de la ville " + city);
 		return listDesEmailCorrespondants;
 	}
 

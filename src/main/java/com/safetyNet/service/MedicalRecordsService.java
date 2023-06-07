@@ -3,6 +3,8 @@ package com.safetyNet.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ import com.safetyNet.repository.MedicalRecordRepository;
 
 @Service
 public class MedicalRecordsService {
+	
+	private static final Logger logger = LogManager.getLogger("MedicalRecordsService");
 	@Autowired
 	MedicalRecordRepository medicalRecordRepository;
 
@@ -30,13 +34,14 @@ public class MedicalRecordsService {
 		{
 			listMedicalRecordsDTO.add(this.convertToDTO(medicalRecord));
 		}
-		
+		logger.info("Récuperer la liste des dossiers ");
 		return listMedicalRecordsDTO;
 	}
 
 	// Recuperer un MedicalRecord
 	public MedicalRecordsDTO getMedicalRecord(String firstName, String lastName) throws MedicalRecordsIntrouvableException {
 		if(medicalRecordRepository.findByfirstName(firstName, lastName) ==  null )throw  new MedicalRecordsIntrouvableException("Le dossier de "+ firstName + "  " + lastName + " est introuvable");
+		logger.info("Récuperer le dossier "+firstName+" "+ lastName );
 		return this.convertToDTO(medicalRecordRepository.findByfirstName(firstName, lastName));
 	}
 
@@ -45,6 +50,8 @@ public class MedicalRecordsService {
 	public MedicalRecordsDTO addMedicalRecord(MedicalRecordsModel newMedicalRecord) {
 
 		if (newMedicalRecord != null) {
+			
+			logger.info("Ajouter le dossier "+newMedicalRecord.getFirstName()+" "+ newMedicalRecord.getLastName() );
 			return this.convertToDTO(medicalRecordRepository.saveMedicalRecord(newMedicalRecord));
 		} 
 		return null;
@@ -55,7 +62,13 @@ public class MedicalRecordsService {
 
 		if (updateMedicalRecord != null) {
 			
-			if(medicalRecordRepository.updateMedicalRecord(updateMedicalRecord) ==  null )throw new MedicalRecordsIntrouvableException("Le dossier de "+ updateMedicalRecord.firstName + "  " + updateMedicalRecord.lastName + " est introuvable");
+			if(medicalRecordRepository.updateMedicalRecord(updateMedicalRecord) ==  null )
+				{
+					logger.error("Le dossier "+updateMedicalRecord.getFirstName()+" "+ updateMedicalRecord.getLastName() +" est introuvable" );
+					throw new MedicalRecordsIntrouvableException("Le dossier de "+ updateMedicalRecord.firstName + "  " + updateMedicalRecord.lastName + " est introuvable");
+				}
+			
+			logger.info("Modifier le dossier "+updateMedicalRecord.getFirstName()+" "+ updateMedicalRecord.getLastName() );
 			return this.convertToDTO(medicalRecordRepository.updateMedicalRecord(updateMedicalRecord));
 		}
 		return null;
@@ -66,7 +79,12 @@ public class MedicalRecordsService {
 
 		if (firstName != null && lastName != null) {
 			MedicalRecordsModel medicalRecordToDelet = medicalRecordRepository.findByfirstName(firstName, lastName);
-			if(medicalRecordToDelet ==  null )throw new MedicalRecordsIntrouvableException("Le dossier de "+ firstName + "  " + lastName + " est introuvable");
+			if(medicalRecordToDelet ==  null )
+				{
+				logger.error("Le dossier "+firstName+" "+ lastName +" est introuvable" );
+					throw new MedicalRecordsIntrouvableException("Le dossier de "+ firstName + "  " + lastName + " est introuvable");
+				}
+			logger.info("Supprimer le dossier de "+firstName+" "+ lastName);
 			return this.convertToDTO(medicalRecordRepository.deleteMedicalRecordsModel(medicalRecordToDelet)); 
 		} 
 		return null ;
