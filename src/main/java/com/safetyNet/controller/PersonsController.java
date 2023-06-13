@@ -26,19 +26,18 @@ public class PersonsController {
 
 	@GetMapping("/personALL")
 	public ResponseEntity<List<PersonsDTO>> getPersonsALL() throws PersonIntrovableExeption  {
-		if(personsService.getPersons().isEmpty()== true)throw new PersonIntrovableExeption("La liste des personnes est vide coucou");
+		
 		return ResponseEntity.status(HttpStatus.OK).body(personsService.getPersons());
 	}
 
 	@GetMapping("/person/{firstName}/{lastName}")
 	public ResponseEntity<PersonsDTO> getPerson(@PathVariable String firstName, @PathVariable String lastName) throws PersonIntrovableExeption {
-		if(personsService.getPerson(firstName, lastName)== null)  throw new PersonIntrovableExeption("La personne " +firstName+ " "+ lastName + " est introuvable");
 		return ResponseEntity.status(HttpStatus.OK).body(personsService.getPerson(firstName, lastName));
 	}
 
 	// ajouter une personne au fichier JSON
 	@PostMapping(value = "/person")
-	public ResponseEntity<PersonsDTO> postPerson(@RequestBody PersonsModel preson) {
+	public ResponseEntity<PersonsDTO> postPerson(@RequestBody PersonsModel preson) throws PersonIntrovableExeption {
 
 		return ResponseEntity.status(HttpStatus.OK).body(personsService.addPerson(preson));
 

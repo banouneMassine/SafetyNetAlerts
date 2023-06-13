@@ -22,7 +22,7 @@ public class MedicalRecordRepositoryImp implements MedicalRecordRepository{
 
 	@Override
 	public MedicalRecordsModel findByfirstName(String firstName, String lastName) {
-		
+	
 		
 		for (MedicalRecordsModel medicalRecordIteration : this.MedicalRecordsList )
 		{

@@ -25,7 +25,7 @@ public class FirestationsService {
 	{
 		if(newFirestations !=  null)
     	{
-			logger.info("Ajouter la station "+ newFirestations.getAddress() );
+			logger.info("Ajouter la station  "+ newFirestations.getAddress() );
 			return this.convertToDTO(firestationsRepository.saveFireStation(newFirestations));
 			
     	}
@@ -35,34 +35,29 @@ public class FirestationsService {
 	
 	public FireStationsDTO updateFireStations(FirestationsModel updateFireStations) throws FireStationIntrouvableException
 	{
-		if(updateFireStations !=  null)
-    	{
+		
 			if(firestationsRepository.updateFireStation(updateFireStations) == null) 
 			{
-				logger.error("La station "+updateFireStations.getAddress() +" est introuvable" );
-				throw new FireStationIntrouvableException("La station"+ updateFireStations.address + " est introuvable ");
+				logger.error("La station  "+updateFireStations.getAddress() +" est introuvable" );
+				throw new FireStationIntrouvableException("La station "+ updateFireStations.address + " est introuvable ");
 			}
-			logger.info("Modifier la station "+ updateFireStations.getAddress() );
+			logger.info("Modifier la station  "+ updateFireStations.getAddress() );
 			return this.convertToDTO(firestationsRepository.updateFireStation(updateFireStations));
-     	  
-    	}
-	    return null ; 
+
 	}
 	
 	public FireStationsDTO deleteFireStations( String adresse) throws FireStationIntrouvableException
 	{
-		if(adresse !=  null)
-    	{
+		
 			FirestationsModel FireStationToDelete =firestationsRepository.findByAdresse(adresse);
 			if(FireStationToDelete == null ) 
 				{
-					logger.error("La station "+ adresse +" est introuvable" );
-					throw new FireStationIntrouvableException("La station"+ adresse + " est introuvable");
+					logger.error("La station  "+ adresse +" est introuvable" );
+					throw new FireStationIntrouvableException("La station "+ adresse + " est introuvable");
 				}
-			logger.info("Supprimer la station "+ FireStationToDelete.getAddress() );
+			logger.info("Supprimer la station  "+ FireStationToDelete.getAddress() );
 			return	this.convertToDTO(firestationsRepository.removeFireStation(FireStationToDelete));
-    	}
-	  return null ; 
+    	
 	}
 	
 	
@@ -79,15 +74,16 @@ public class FirestationsService {
 		
 	}
 	
-	public FirestationsModel getFireStation(String adresse) throws FireStationIntrouvableException
+	public FireStationsDTO getFireStation(String adresse) throws FireStationIntrouvableException
 	{
-		if(firestationsRepository.findByAdresse(adresse) == null)
+		FirestationsModel myFirestationsModel = firestationsRepository.findByAdresse(adresse);
+		if( myFirestationsModel == null)
 			{
-				
-				throw new FireStationIntrouvableException("La station "+ adresse + "  est vide");
+				logger.error("La station "+ adresse + "  est introuvable");
+				throw new FireStationIntrouvableException("La station "+ adresse + "  est introuvable");
 			}
 		logger.info("Récuperer la liste " + adresse);
-		return firestationsRepository.findByAdresse(adresse);
+		return this.convertToDTO(myFirestationsModel);
 	}
 	
 	public FireStationsDTO convertToDTO(FirestationsModel firestationsModel)
