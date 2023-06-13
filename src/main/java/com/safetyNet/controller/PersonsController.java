@@ -25,7 +25,7 @@ public class PersonsController {
 	private PersonsService personsService;
 
 	@GetMapping("/personALL")
-	public ResponseEntity<List<PersonsDTO>> getPersonsALL() throws PersonIntrovableExeption {
+	public ResponseEntity<List<PersonsDTO>> getPersonsALL() throws PersonIntrovableExeption  {
 		
 		return ResponseEntity.status(HttpStatus.OK).body(personsService.getPersons());
 	}
@@ -37,7 +37,7 @@ public class PersonsController {
 
 	// ajouter une personne au fichier JSON
 	@PostMapping(value = "/person")
-	public ResponseEntity<PersonsDTO> postPerson(@RequestBody PersonsModel preson) {
+	public ResponseEntity<PersonsDTO> postPerson(@RequestBody PersonsModel preson) throws PersonIntrovableExeption {
 
 		return ResponseEntity.status(HttpStatus.OK).body(personsService.addPerson(preson));
 
