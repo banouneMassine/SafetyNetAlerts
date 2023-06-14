@@ -10,7 +10,7 @@ public interface MedicalRecordRepository {
 	
 	//CRUD
 	public List<MedicalRecordsModel> findAll();// Get ALL MedicalRecords
-	public MedicalRecordsModel findByfirstName(String firstName , String lastName);// Get one MedicalRecord
+	public MedicalRecordsModel findByName(String firstName , String lastName);// Get one MedicalRecord
 
 	public MedicalRecordsModel saveMedicalRecord(MedicalRecordsModel newMedicalRecord );
 	public MedicalRecordsModel updateMedicalRecord(MedicalRecordsModel MedicalRecordModify);

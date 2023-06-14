@@ -41,14 +41,14 @@ public class MedicalRecordsService {
 
 	// Recuperer un MedicalRecord
 	public MedicalRecordsDTO getMedicalRecord(String firstName, String lastName) throws MedicalRecordsIntrouvableException {
-		MedicalRecordsModel  myMedicalRecord = medicalRecordRepository.findByfirstName(firstName, lastName) ; 
+		MedicalRecordsModel  myMedicalRecord = medicalRecordRepository.findByName(firstName, lastName) ; 
 		if(myMedicalRecord ==  null )
 		{
 			logger.error("Le dossier est introuvable");
 			throw  new MedicalRecordsIntrouvableException("Le dossier de "+ firstName + "  " + lastName + " est introuvable");
 		}
 		logger.info("Récuperer le dossier "+firstName+" "+ lastName );
-		return this.convertToDTO(medicalRecordRepository.findByfirstName(firstName, lastName));
+		return this.convertToDTO(medicalRecordRepository.findByName(firstName, lastName));
 	}
 
 	// Ajouter un MedicalRecords
@@ -87,7 +87,7 @@ public class MedicalRecordsService {
 	public MedicalRecordsDTO removeMedicalRecord(String firstName, String lastName) throws MedicalRecordsIntrouvableException {
 
 	
-			MedicalRecordsModel medicalRecordToDelet = medicalRecordRepository.findByfirstName(firstName, lastName);
+			MedicalRecordsModel medicalRecordToDelet = medicalRecordRepository.findByName(firstName, lastName);
 			if(medicalRecordToDelet ==  null )
 				{
 					logger.error("Le dossier de "+firstName+" "+ lastName +" est introuvable" );

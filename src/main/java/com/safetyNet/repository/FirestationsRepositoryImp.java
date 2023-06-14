@@ -8,10 +8,11 @@ import org.springframework.stereotype.Repository;
 import com.safetyNet.model.FirestationsModel;
 
 
+
 @Repository
 public class FirestationsRepositoryImp implements FirestationsRepository {
 
-	
+	 
 	private List<FirestationsModel> listOfFireStations = new ArrayList<>();
 	
 	@Override

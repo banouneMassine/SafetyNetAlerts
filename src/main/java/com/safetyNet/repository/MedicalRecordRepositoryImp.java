@@ -21,7 +21,7 @@ public class MedicalRecordRepositoryImp implements MedicalRecordRepository{
 	}
 
 	@Override
-	public MedicalRecordsModel findByfirstName(String firstName, String lastName) {
+	public MedicalRecordsModel findByName(String firstName, String lastName) {
 	
 		
 		for (MedicalRecordsModel medicalRecordIteration : this.MedicalRecordsList )
@@ -45,16 +45,13 @@ public class MedicalRecordRepositoryImp implements MedicalRecordRepository{
 
 	@Override
 	public MedicalRecordsModel updateMedicalRecord(MedicalRecordsModel MedicalRecordModify) {
-		MedicalRecordsModel medicalRecordsSearche = this.findByfirstName(MedicalRecordModify.getFirstName(), MedicalRecordModify.getLastName());
+		MedicalRecordsModel medicalRecordsSearche = this.findByName(MedicalRecordModify.getFirstName(), MedicalRecordModify.getLastName());
 		if (medicalRecordsSearche != null)
 		{
 			medicalRecordsSearche.setBirthdate(MedicalRecordModify.getBirthdate());
 			return medicalRecordsSearche;
 		}
 		return null ;
-		
-		
-		
 		
 		//ajoute la modification de medications
 	}
