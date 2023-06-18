@@ -4,28 +4,29 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 
 import com.safetyNet.model.PersonsModel;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class PersonsRepositoryImpTest {
 
-	@Autowired
-	PersonsRepository personsRepositoryImp;
+	@InjectMocks
+	PersonsRepositoryImp personsRepositoryImp;
 	
 	@Test
 	@DisplayName("Tester que la liste des personnes est bien récupérée")
 	void findAll_testTheRecoveryOfAllPeople() {
 		//GIVEN
-	        	
+		personsRepositoryImp.addPerson(new PersonsModel());   	
 		//WHENE
 		List<PersonsModel> listeDesPersonnes =  personsRepositoryImp.findAll();
 		//THEN
@@ -39,6 +40,7 @@ class PersonsRepositoryImpTest {
 		//GIVEN
     		String firstName = "John";
     		String lastName = "Boyd";
+    		
     		PersonsModel personExpected = new PersonsModel();
     		personExpected.setFirstName("John");
     		personExpected.setLastName("Boyd");
@@ -48,10 +50,12 @@ class PersonsRepositoryImpTest {
     		personExpected.setPhone("841-874-6512");
     		personExpected.setZip(97451);
     		
+    		personsRepositoryImp.save(personExpected);
 
 		//WHENE
 		PersonsModel actualPerson =  personsRepositoryImp.findByName(firstName, lastName);
 		//THEN
+		assertThat(personsRepositoryImp.findAll().size()).isEqualTo(1);
 		assertThat(actualPerson).usingRecursiveComparison().isEqualTo(personExpected);
 	}
 	
@@ -77,10 +81,31 @@ class PersonsRepositoryImpTest {
 	{
 		//GIVEN
     	String adresse = "1509 Culver St";
+    	
+    	PersonsModel personExpected1 = new PersonsModel();
+    	personExpected1.setFirstName("John");
+    	personExpected1.setLastName("Boyd");
+    	personExpected1.setAddress("1509 Culver St");
+		
+    	personsRepositoryImp.save(personExpected1);
+    	
+    	PersonsModel personExpected2 = new PersonsModel();
+    	personExpected2.setFirstName("Lionel");
+    	personExpected2.setLastName("Messi");
+    	personExpected2.setAddress("1509 Culver St");
+    	
+    	personsRepositoryImp.save(personExpected2);
+    	
+    	PersonsModel personExpected3 = new PersonsModel();
+    	personExpected3.setFirstName("David");
+    	personExpected3.setLastName("De Gea");
+    	personExpected3.setAddress("01  Manchester united");
+    	
+    	personsRepositoryImp.save(personExpected3);
 		//WHENE
 		List<PersonsModel> listeDesPersonnes =  personsRepositoryImp.findByAdresse(adresse);
 		//THEN
-		assertThat(listeDesPersonnes).isNotEmpty();
+		assertThat(listeDesPersonnes.size()).isEqualTo(2);
 	}
 	
 	@Test
@@ -89,6 +114,13 @@ class PersonsRepositoryImpTest {
 	{
 		//GIVEN
     	String adresse = "adresse inexistant";
+    	
+    	PersonsModel personExpected1 = new PersonsModel();
+    	personExpected1.setFirstName("John");
+    	personExpected1.setLastName("Boyd");
+    	personExpected1.setAddress("1509 Culver St");
+		
+    	personsRepositoryImp.save(personExpected1);
 		//WHENE
 		List<PersonsModel> listeDesPersonnes =  personsRepositoryImp.findByAdresse(adresse);
 		//THEN
@@ -103,14 +135,14 @@ class PersonsRepositoryImpTest {
 		PersonsModel person = new PersonsModel();
 		person.setFirstName("Tony");
 		person.setLastName("Cooper");
-		person.setAddress("112 Steppes Pl");
-		person.setCity("Culver");
-		person.setEmail("tcoop@ymail.com");
-		person.setPhone("841-874-6874");
-		person.setZip(97451);
+		personsRepositoryImp.save(person);
+		
+		PersonsModel person2 = new PersonsModel();
+		person2.setFirstName("Lily");
+		person2.setLastName("Cooper");
+		personsRepositoryImp.save(person2);
 		
 		String prenomDeLaPersonneDeLaFamille = "Lily";
-		
 		
 		//WHENE 
 		List<PersonsModel> listeDesPersonnesdeLaFamille =  personsRepositoryImp.getFamilles(person);
@@ -129,38 +161,23 @@ class PersonsRepositoryImpTest {
 		//GIVEN
 		PersonsModel personAdded = new PersonsModel();
 		personAdded.setFirstName("Banoune");
-		personAdded.setLastName("Massine");
+		personAdded.setLastName("djafar");
 		personAdded.setAddress("8 rue jacque ange gabriel");
 		personAdded.setCity("Bejaia");
 		personAdded.setEmail("massine@gemail.com");
 		personAdded.setPhone("000-111-2222");
 		personAdded.setZip(75000);
-		
+	
 		//WHEN
 		PersonsModel personReturn = personsRepositoryImp.save(personAdded);
 		
 		//THEN
 		assertThat(personReturn).usingRecursiveComparison().isEqualTo(personAdded);
 		assertThat(personsRepositoryImp.findAll()).contains(personAdded);
+		assertThat(personsRepositoryImp.findAll().size()).isEqualTo(1);
 	}
 	
-	@Test
-	@Disabled
-	@DisplayName("Tester que si le format de la personne n'est pas bonne alors l'ajout de cette personne est rejetée et renvoi null")
-	void save_whenePersonInBadFormat_TheneReturnNull()
-	{
-		//GIVEN
-		PersonsModel personAdded = new PersonsModel();
-		
-		
-		//WHEN
-		PersonsModel personReturn = personsRepositoryImp.save(personAdded);
-		
-		//THEN
-		assertThat(personReturn).isNull();
-		
-	}
-	
+
 	
 	@Test
 	@DisplayName("Tester la suppression d'une personne ")
@@ -168,16 +185,14 @@ class PersonsRepositoryImpTest {
 	{
 
 		//GIVEN
-			/*PersonsModel personToDelete = new PersonsModel();
+			PersonsModel personToDelete = new PersonsModel();
 			personToDelete.setFirstName("Jacob");
 			personToDelete.setLastName("Boyd");
 			personToDelete.setAddress("1509 Culver St");
-			personToDelete.setCity("Culver");
-			personToDelete.setEmail("drk@email.com");
-			personToDelete.setPhone("841-874-6513");
-			personToDelete.setZip(97451);*/
+		
+			personsRepositoryImp.save(personToDelete);
 			
-		PersonsModel personToDelete = personsRepositoryImp.findByName("Jacob" ,"Boyd" );
+		// PersonsModel personToDelete = personsRepositoryImp.findByName("Jacob" ,"Boyd" );
 			     	
 		//WHENE 
 			PersonsModel personDelete = personsRepositoryImp.deletePerson(personToDelete);
@@ -185,12 +200,13 @@ class PersonsRepositoryImpTest {
 			
 		//THEN
 			assertThat(personDelete).isEqualTo(personToDelete);
+			assertThat(personsRepositoryImp.findAll().size()).isEqualTo(0);
 				
 	}
 	
 	@Test
 	@DisplayName("Tester la suppression d'une personne qui n'existe pas dans la list")
-	void deletePerson_whenePersonNotInList_thenReturnNull()  // a revoir 
+	void deletePerson_whenePersonNotInList_thenReturnNull() 
 	{
 		//GIVEN
 			PersonsModel personToDelete = new PersonsModel();
@@ -201,6 +217,7 @@ class PersonsRepositoryImpTest {
 			personToDelete.setEmail("drk@email.com");
 			personToDelete.setPhone("841-874-6513");
 			personToDelete.setZip(97451);
+			
 			
 		//WHENE 
 			PersonsModel personDelete = personsRepositoryImp.deletePerson(personToDelete);
@@ -218,14 +235,25 @@ class PersonsRepositoryImpTest {
 		PersonsModel personToUpdate = new PersonsModel();
 		personToUpdate.setFirstName("Tenley");
 		personToUpdate.setLastName("Boyd");
-		personToUpdate.setAddress("nouvelle adresse");
-		personToUpdate.setCity("nouvelle city");
-		personToUpdate.setEmail("drk@email.com");
+		personToUpdate.setAddress("ancienne adresse");
+		personToUpdate.setCity("ancienne city");
+		personToUpdate.setEmail("ancienne@email.com");
 		personToUpdate.setPhone("841-874-6513");
-		personToUpdate.setZip(97451);
+		personToUpdate.setZip(90000);
+		
+		personsRepositoryImp.save(personToUpdate);
+		
+		PersonsModel newPersonne = new PersonsModel();
+		newPersonne.setFirstName("Tenley");
+		newPersonne.setLastName("Boyd");
+		newPersonne.setAddress("nouvelle adresse");
+		newPersonne.setCity("nouvelle city");
+		newPersonne.setEmail("nouvelle@email.com");
+		newPersonne.setPhone("841-874-6513");
+		newPersonne.setZip(91234);
 		
 		//WHENE
-		PersonsModel newPerson = personsRepositoryImp.updatePerson(personToUpdate);
+		PersonsModel newPerson = personsRepositoryImp.updatePerson(newPersonne);
 		//THEN
 		
 		assertThat(newPerson.getAddress()).isEqualTo("nouvelle adresse");

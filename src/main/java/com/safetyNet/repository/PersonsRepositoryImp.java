@@ -13,7 +13,7 @@ public class PersonsRepositoryImp implements PersonsRepository {
 	
 	@Override
 	public void addPerson(PersonsModel person) {
-		personsList.add(person);
+		this.personsList.add(person);
 	}
 
 	@Override
@@ -24,7 +24,7 @@ public class PersonsRepositoryImp implements PersonsRepository {
 
 	@Override
 	public PersonsModel findByName(String firstName , String lastName) {
-		
+		 
 	
 		for (PersonsModel person : this.personsList) {
 			if (person.getFirstName().equalsIgnoreCase(firstName) && person.getLastName().equalsIgnoreCase(lastName)) {
@@ -68,12 +68,9 @@ public class PersonsRepositoryImp implements PersonsRepository {
 	@Override
 	public PersonsModel save(PersonsModel person) {
 
-		 if (this.personsList.add(person))
-		 {
-			 return person; 
-		 }
-		 return null ; ////////////// pas testé 
-		
+		this.personsList.add(person);
+		return person; 
+		 
 	}
 	
 

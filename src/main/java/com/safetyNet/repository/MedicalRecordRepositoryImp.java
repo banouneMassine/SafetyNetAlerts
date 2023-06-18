@@ -36,11 +36,8 @@ public class MedicalRecordRepositoryImp implements MedicalRecordRepository{
 
 	@Override
 	public MedicalRecordsModel saveMedicalRecord(MedicalRecordsModel newMedicalRecord) {
-		if(this.MedicalRecordsList.add(newMedicalRecord))
-		{
-			return newMedicalRecord;
-		}
-		return null ; 
+		this.MedicalRecordsList.add(newMedicalRecord);
+		return newMedicalRecord;
 	}
 
 	@Override

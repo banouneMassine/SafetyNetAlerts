@@ -10,16 +10,19 @@ import com.safetyNet.model.MedicalRecordsModel;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class MedicalRecordRepositoryImpTest {
 
-	@Autowired
-	MedicalRecordRepository medicalRecordRepositoryImp ;
+	@InjectMocks
+	MedicalRecordRepositoryImp medicalRecordRepositoryImp ;
 	
 	
 
@@ -28,7 +31,7 @@ class MedicalRecordRepositoryImpTest {
 	void findAll_testTheRecoveryOfAllMedicalRecord()
 	{
 		//GIVEN
-		
+		medicalRecordRepositoryImp.addMedicalRecord(new MedicalRecordsModel());
 		//WHEN
 		List<MedicalRecordsModel> listDesDossiers = medicalRecordRepositoryImp.findAll();
 		//THENE
@@ -51,12 +54,13 @@ class MedicalRecordRepositoryImpTest {
 		medicalRecordExpeted.setAllergies(new ArrayList<>());
 		medicalRecordExpeted.setMedications(new ArrayList<>());
 		
-        		
+		medicalRecordRepositoryImp.saveMedicalRecord(medicalRecordExpeted);
 		//WHEN
 		MedicalRecordsModel actualMedicalRecord = medicalRecordRepositoryImp.findByName(firstName , lastName);
 		
 		//THENE
 		assertThat(actualMedicalRecord).usingRecursiveComparison().isEqualTo(medicalRecordExpeted);
+		assertThat(medicalRecordRepositoryImp.findAll().size()).isEqualTo(1);
 		
 	}
 	
@@ -68,6 +72,18 @@ class MedicalRecordRepositoryImpTest {
 		//GIVEN
 		String firstName = arg1;
 		String lastName = arg2;
+		
+		MedicalRecordsModel medicalRecord1 = new MedicalRecordsModel();
+		medicalRecord1.setFirstName("John");
+		medicalRecord1.setLastName("Zemicks");
+		medicalRecord1.setBirthdate("03/06/2017");
+		
+		MedicalRecordsModel medicalRecord2 = new MedicalRecordsModel();
+		medicalRecord2.setFirstName("John");
+		medicalRecord2.setLastName("Boyd");
+		medicalRecord2.setBirthdate("03/06/2017");
+		
+		medicalRecordRepositoryImp.saveMedicalRecord(medicalRecord1);
 		
 		//WHEN
 		MedicalRecordsModel actualMedicalRecord = medicalRecordRepositoryImp.findByName(firstName , lastName);
@@ -87,6 +103,8 @@ class MedicalRecordRepositoryImpTest {
 		MedicalRecordadded.setBirthdate("03/06/1985");
 		MedicalRecordadded.setAllergies(new ArrayList<>());
 		MedicalRecordadded.setMedications(new ArrayList<>());
+		
+		
 		//WHEN
 		MedicalRecordsModel newMedicalRecord = medicalRecordRepositoryImp.saveMedicalRecord(MedicalRecordadded);
 		//THENE
@@ -95,18 +113,7 @@ class MedicalRecordRepositoryImpTest {
 		assertThat(medicalRecordRepositoryImp.findAll()).contains(MedicalRecordadded);
 	}
 	
-	@Test
-	@DisplayName("Tester l'impossibilté  d'ajouter un dossier dans la liste des dossierss")
-	@Disabled
-	void saveMedicalRecord_wheneMedicalREcordInBadFormat_TheneReturnNull()
-	{
-		//GIVEN
-			MedicalRecordsModel MedicalRecordadded = null;
-		//WHEN
-			MedicalRecordsModel newMedicalRecord = medicalRecordRepositoryImp.saveMedicalRecord(MedicalRecordadded);
-		//THENE	
-		assertThat(newMedicalRecord).isNull();
-	}
+
 	
 	@Test
 	@DisplayName("Tester la modification de la date de naissance qui se trouve dans le dossier d'une personne")
@@ -114,17 +121,22 @@ class MedicalRecordRepositoryImpTest {
 	{
 		//GIVEN
 		
+		MedicalRecordsModel medicalRecord = new MedicalRecordsModel();
+		medicalRecord.setFirstName("Roger");
+		medicalRecord.setLastName("Boyd");
+		medicalRecord.setBirthdate("14/06/2023");
+		
+		medicalRecordRepositoryImp.saveMedicalRecord(medicalRecord);
+		
 		MedicalRecordsModel medicalRecordToUpdate = new MedicalRecordsModel();
 		medicalRecordToUpdate.setFirstName("Roger");
 		medicalRecordToUpdate.setLastName("Boyd");
-		medicalRecordToUpdate.setBirthdate("14/06/2023");
-		medicalRecordToUpdate.setAllergies(new ArrayList<>());
-		medicalRecordToUpdate.setMedications(new ArrayList<>());
-
+		medicalRecordToUpdate.setBirthdate("19/06/2023");
+		
 		//WHEN
 		MedicalRecordsModel newMedicalRecord = medicalRecordRepositoryImp.updateMedicalRecord(medicalRecordToUpdate);
 		//THENE	
-		assertThat(newMedicalRecord.getBirthdate()).isEqualTo("14/06/2023");
+		assertThat(newMedicalRecord.getBirthdate()).isEqualTo("19/06/2023");
 		
 	}
 	
@@ -133,19 +145,24 @@ class MedicalRecordRepositoryImpTest {
 	void updateMedicalRecord_wheneMedicalRecordNotFoundInList_theneReturnNull()
 	{
 		//GIVEN
+		MedicalRecordsModel medicalRecord = new MedicalRecordsModel();
+		medicalRecord.setFirstName("Roger");
+		medicalRecord.setLastName("Boyd");
+		medicalRecord.setBirthdate("14/06/2023");
+		
+		medicalRecordRepositoryImp.saveMedicalRecord(medicalRecord);
+		
 		
 		MedicalRecordsModel medicalRecordExpeted = new MedicalRecordsModel();
 		medicalRecordExpeted.setFirstName("jymmy");
 		medicalRecordExpeted.setLastName("a");
-		medicalRecordExpeted.setBirthdate("14/06/2023");
-		medicalRecordExpeted.setAllergies(new ArrayList<>());
-		medicalRecordExpeted.setMedications(new ArrayList<>());
+		medicalRecordExpeted.setBirthdate("18/06/2023");
+	
  
 		//WHEN
 		MedicalRecordsModel newMedicalRecord = medicalRecordRepositoryImp.updateMedicalRecord(medicalRecordExpeted);
 		//THENE	
 		assertThat(newMedicalRecord).isNull();
-		
 	}
 	
 	@Test
@@ -153,18 +170,21 @@ class MedicalRecordRepositoryImpTest {
 	void deleteMedicalRecordsModel_testWheneMedicalRecordInList_ThenDeletIt()
 	{
 		//GIVEN
-		/*MedicalRecordsModel medicalRecordToDelete = new MedicalRecordsModel();
+		MedicalRecordsModel medicalRecordToDelete = new MedicalRecordsModel();
 		medicalRecordToDelete.setFirstName("Jonanathan");
 		medicalRecordToDelete.setLastName("Marrack");
 		medicalRecordToDelete.setBirthdate("01/03/1989");
-		medicalRecordToDelete.setAllergies(new ArrayList<>());
-		medicalRecordToDelete.setMedications(new ArrayList<>());*/
-		MedicalRecordsModel medicalRecordToDelete =medicalRecordRepositoryImp.findByName("Jonanathan","Marrack");
+
+		medicalRecordRepositoryImp.saveMedicalRecord(medicalRecordToDelete);
+		
+	//	MedicalRecordsModel medicalRecordToDelete =medicalRecordRepositoryImp.findByName("Jonanathan","Marrack");
 		//WHEN
 		MedicalRecordsModel MedicalRecordDelete = medicalRecordRepositoryImp.deleteMedicalRecordsModel(medicalRecordToDelete);
 		//THENE	
 		assertThat(MedicalRecordDelete).isEqualTo(medicalRecordToDelete);
-		assertThat(medicalRecordRepositoryImp.findAll()).doesNotContain(medicalRecordToDelete) ; //.contains(MedicalRecordadded);
+		assertThat(medicalRecordRepositoryImp.findAll()).doesNotContain(medicalRecordToDelete) ; 
+		assertThat(medicalRecordRepositoryImp.findAll().size()).isEqualTo(0);
+		
 	}
 	
 	@Test
@@ -172,13 +192,19 @@ class MedicalRecordRepositoryImpTest {
 	void deleteMedicalRecordsModel_testWheneMedicalRecordNotInList_ThenReturnNull()
 	{
 		//GIVEN
+		
+		MedicalRecordsModel medicalRecord = new MedicalRecordsModel();
+		medicalRecord.setFirstName("Jonanathan");
+		medicalRecord.setLastName("Marrack");
+		medicalRecord.setBirthdate("01/03/1989");
 
+		medicalRecordRepositoryImp.saveMedicalRecord(medicalRecord);
+		
 		MedicalRecordsModel medicalRecordToDelete = new MedicalRecordsModel();
 		medicalRecordToDelete.setFirstName("jymmy");
 		medicalRecordToDelete.setLastName("a");
 		medicalRecordToDelete.setBirthdate("14/06/2023");
-		medicalRecordToDelete.setAllergies(new ArrayList<>());
-		medicalRecordToDelete.setMedications(new ArrayList<>());
+	
 		//WHEN
 		MedicalRecordsModel MedicalRecordDelete = medicalRecordRepositoryImp.deleteMedicalRecordsModel(medicalRecordToDelete);
 		//THENE	

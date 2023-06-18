@@ -46,7 +46,7 @@ public class PersonsController {
 	// supprimer une personne du fichier JSON
 	@DeleteMapping(value = "/person/{firstName}/{lastName}")
 	public ResponseEntity<PersonsDTO> deletePerson(@PathVariable String firstName, @PathVariable String lastName) throws PersonIntrovableExeption {
-
+	
 		return ResponseEntity.status(HttpStatus.OK).body( personsService.removePerson(firstName, lastName));
 
 	}

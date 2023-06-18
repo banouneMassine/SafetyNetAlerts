@@ -4,31 +4,37 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 
 import com.safetyNet.model.FirestationsModel;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 class FirestationsRepositoryImpTest {
 
-	@Autowired
-	FirestationsRepository firestationsRepository;
+
+	
+	@InjectMocks
+	FirestationsRepositoryImp firestationsRepository;
+	
+	
 	
 	@Test
 	@DisplayName("Testet la recupération des stations")
 	void findAll_testTheRecoveryOfAllStations()
 	{
 		//GIVEN
-		
+		firestationsRepository.addFirestation(new FirestationsModel());
 		//WHEN
-		List<FirestationsModel> listDesStations =  firestationsRepository.findAll();
+		List<FirestationsModel> listDesStations  =  firestationsRepository.findAll();
 		
 		//THENE
 		assertThat(listDesStations).isNotEmpty();
+		assertThat(listDesStations.size()).isEqualTo(1);
 	}
 	
 	@Test
@@ -36,79 +42,83 @@ class FirestationsRepositoryImpTest {
 	void findByAdresse_testThatWhenEnterAdress_thenReturnTheStation()
 	{
 		//GIVEN
-		String adresse = "29 15th St";
+		String adresse = "adresse 1"; 
 		
-		FirestationsModel firestationExpeted = new FirestationsModel();
-		firestationExpeted.setAddress("29 15th St");
-		firestationExpeted.setStation(2);
+		FirestationsModel firestation = new FirestationsModel();
+		firestation.setAddress("adresse 1");
+		firestation.setStation(10);
+		
+		firestationsRepository.addFirestation(firestation);
 		
 		//WHEN
 		FirestationsModel acualFirestation = firestationsRepository.findByAdresse(adresse);
 		//THENE
-		assertThat(acualFirestation).usingRecursiveComparison().isEqualTo(firestationExpeted);
+		assertThat(acualFirestation.getAddress()).isEqualTo(adresse);
+		assertThat(acualFirestation.getStation()).isEqualTo(10);
+		
 		
 	}
 	
 	@Test
-	@DisplayName("Tester la recupération la liste des stations grace au numéro de la station")
+	@DisplayName("Tester la recupération de la liste des stations grace au numéro de la station")
 	void findByStationNumber_testThatWhenEnterStationNumber_thenReturnTheListStations()
 	{
 		//GIVEN
-		int station = 4;
-		String adresseExpected = "489 Manchester St";
+		int station = 1;
+		String adresseExpected2 = "adresse 2";
 		
+		FirestationsModel firestation1 = new FirestationsModel();
+		firestation1.setAddress("adresse 1");
+		firestation1.setStation(1);
+		
+		FirestationsModel firestation2 = new FirestationsModel();
+		firestation2.setAddress("adresse 2");
+		firestation2.setStation(1);
+		
+		firestationsRepository.addFirestation(firestation1);
+		firestationsRepository.addFirestation(firestation2);
 		//WHEN
 		List<FirestationsModel> acualListFirestation = firestationsRepository.findByStationNumber(station);
+		
+		
 		//THENE
-		assertThat(acualListFirestation).isNotEmpty();
-		assertThat(acualListFirestation.get(0).getAddress()).isEqualTo(adresseExpected);
-	}
+		assertThat(acualListFirestation.size()).isEqualTo(2);
+		assertThat(acualListFirestation.get(1).getAddress()).isEqualTo(adresseExpected2);
+		
+	} 
 	
 	@Test
 	@DisplayName("Tester l'ajout d'une nouvelle station")
 	void saveFireStation_whenAddNewStation_thenReturnTheStation()
 	{
 		//GIVEN
-		FirestationsModel firestationadded = new FirestationsModel();
-		firestationadded.setAddress("8 rue jacque");
-		firestationadded.setStation(5);
-		
+		FirestationsModel firestationadded = new FirestationsModel(); 		
 		//WHEN
 		FirestationsModel newFirestation = firestationsRepository.saveFireStation(firestationadded);
 		//THENE
 		assertThat(newFirestation).usingRecursiveComparison().isEqualTo(firestationadded);
-		assertThat(firestationsRepository.findAll()).contains(firestationadded);
+		assertThat(firestationsRepository.findAll().size()).isEqualTo(1);
 	}
 	
-	@Test
-	@DisplayName("Tester l'impossibilté  d'ajouter une station dans la liste des stations")
-	@Disabled
-	void saveFireStation_whenAddBadStation_thenReturnNull()
-	{
-		//GIVEN
-		FirestationsModel firestationadded =null;
-				
-		//WHEN
-		FirestationsModel newFirestation = firestationsRepository.saveFireStation(firestationadded);
-		//THENE
-		assertThat(newFirestation).isNull();
-	}
 	
 	@Test
 	@DisplayName("Tester la supprission d'une station")
 	void removeFireStation_testWhenDeletStation_theneReturnStation()
 	{
 		//GIVEN
-		/*FirestationsModel firestationToDelete = new FirestationsModel();
+		FirestationsModel firestationToDelete = new FirestationsModel();
 		firestationToDelete.setAddress("644 Gershwin Cir");
-		firestationToDelete.setStation(1);*/
-		FirestationsModel	firestationToDelete =firestationsRepository.findByAdresse("644 Gershwin Cir");
+		firestationToDelete.setStation(1);
+		
+		firestationsRepository.addFirestation(firestationToDelete);
+	
 		//WHEN
 		FirestationsModel firestationtDelete = firestationsRepository.removeFireStation(firestationToDelete);
 		
 		//THENE
 		assertThat(firestationtDelete).isEqualTo(firestationToDelete);
 		assertThat(firestationsRepository.findAll()).doesNotContain(firestationToDelete);
+		assertThat(firestationsRepository.findAll().size()).isEqualTo(0);
 	}
 	
 	@Test
@@ -116,10 +126,9 @@ class FirestationsRepositoryImpTest {
 	void removeFireStation_testWheneStationNotInList_ThenReturnNull()
 	{
 		//GIVEN
+	
 		FirestationsModel firestationToDelete = new FirestationsModel();
-		firestationToDelete.setAddress("47 route de dampierre");
-		firestationToDelete.setStation(6);
-
+		
 		//WHEN
 		FirestationsModel firestationtDelete = firestationsRepository.removeFireStation(firestationToDelete);
 		
@@ -132,15 +141,19 @@ class FirestationsRepositoryImpTest {
 	void updateFireStation_testUpdateStationNumber()
 	{
 		//GIVEN
-		FirestationsModel firestationToUpdate = new FirestationsModel();
-		firestationToUpdate.setAddress("951 LoneTree Rd");
-		firestationToUpdate.setStation(6);
+		FirestationsModel firestation1 = new FirestationsModel();
+		firestation1.setAddress("951 LoneTree Rd");
+		firestation1.setStation(1);
+		firestationsRepository.addFirestation(firestation1);
 		
+		FirestationsModel firestation2 = new FirestationsModel();
+		firestation2.setAddress("951 LoneTree Rd");
+		firestation2.setStation(2);
 		//WHEN
-		FirestationsModel newStation = firestationsRepository.updateFireStation(firestationToUpdate);
+		FirestationsModel newStation = firestationsRepository.updateFireStation(firestation2);
 		
 		//THENE
-		assertThat(newStation.station).isEqualTo(6);
+		assertThat(newStation.station).isEqualTo(2);
 	}
 	
 	@Test
@@ -148,13 +161,20 @@ class FirestationsRepositoryImpTest {
 	void updateFireStation_testUpdateStationNumber_WheneStationNotFoundInList_theneReturnNull()
 	{
 		//GIVEN
-		FirestationsModel firestationToUpdate = new FirestationsModel();
-		firestationToUpdate.setAddress("adresse inconnue");
-		firestationToUpdate.setStation(6);
+		FirestationsModel firestationAdded = new FirestationsModel();
+		firestationAdded.setAddress("adresse");
+		firestationAdded.setStation(1);
+		
+		firestationsRepository.addFirestation(firestationAdded);
+		
+		FirestationsModel firestationInconnue= new FirestationsModel();
+		firestationAdded.setAddress("adresse inconnue");
+		firestationAdded.setStation(1);
+		
 		
 		//WHEN
-		FirestationsModel newStation = firestationsRepository.updateFireStation(firestationToUpdate);
-		
+		FirestationsModel newStation = firestationsRepository.updateFireStation(firestationInconnue);
+	
 		//THENE
 		assertThat(newStation).isNull();
 	}
