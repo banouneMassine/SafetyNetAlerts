@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -415,7 +414,7 @@ class GestionDesUrlsServiceTest {
 		when( personsRepository.findAll()).thenReturn(listPersons);
         //WHEN
         List<String> listDesEmailCorrespondants = gestionDesUrlsService.getListOFEmail(city);
-        
+         
         //THEN
        
         verify(personsRepository).findAll();

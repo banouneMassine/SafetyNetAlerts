@@ -9,17 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.safetyNet.DTO.ChildDTO;
-import com.safetyNet.DTO.EmailByCityDTO;
 import com.safetyNet.DTO.FireDTO;
 import com.safetyNet.DTO.FloodDTO;
 import com.safetyNet.DTO.PersonInfoDTO;
 import com.safetyNet.DTO.PersonsCoveredByTheFirestationDTO;
-import com.safetyNet.DTO.PhoneNumberByStationNumberDTO;
 import com.safetyNet.service.GestionDesUrlsService;
 
-@RestController
+@RestController 
 public class GestionDesUrlsController {
 	@Autowired
 	GestionDesUrlsService gestionDesUrlsService ; 

@@ -12,12 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.safetyNet.DTO.ChildDTO;
-import com.safetyNet.DTO.EmailByCityDTO;
 import com.safetyNet.DTO.FireDTO;
 import com.safetyNet.DTO.FloodDTO;
 import com.safetyNet.DTO.PersonInfoDTO;
 import com.safetyNet.DTO.PersonsCoveredByTheFirestationDTO;
-import com.safetyNet.DTO.PhoneNumberByStationNumberDTO;
 import com.safetyNet.model.FirestationsModel;
 import com.safetyNet.model.MedicalRecordsModel;
 import com.safetyNet.model.PersonsModel;

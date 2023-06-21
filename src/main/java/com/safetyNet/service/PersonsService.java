@@ -23,7 +23,7 @@ public class PersonsService {
 	private static final Logger logger = LogManager.getLogger("PersonsService");
 	@Autowired
 	PersonsRepository personsRepository;
-	
+	 
 	public List<PersonsDTO> getPersons()  {
 		
 		List<PersonsDTO> listPersonsDTO = new ArrayList<>();
@@ -34,7 +34,7 @@ public class PersonsService {
 		logger.info("Récuperer la liste des personnes");
 		return listPersonsDTO;
 		  
-	}
+	} 
  
 	public PersonsDTO getPerson(String firstName, String lastName) throws PersonIntrovableExeption  {
 		
