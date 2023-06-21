@@ -41,7 +41,7 @@ public class GestionDesUrlsController {
 	
 	//Cette url doit retourner une liste des numéros de téléphone des résidents desservis par la caserne de pompiers
 	@GetMapping("/phoneAlert")
-	public ResponseEntity<List<PhoneNumberByStationNumberDTO>> listOfNumberPhoneByFireStation(@RequestParam("stationNumber") int stationNumber )
+	public ResponseEntity<List<String>> listOfNumberPhoneByFireStation(@RequestParam("stationNumber") int stationNumber )
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getListofNumber(stationNumber));
 	}
@@ -65,7 +65,7 @@ public class GestionDesUrlsController {
 	
 	//Cette url doit retourner les adresses mail de tous les habitants de la ville.
 	@GetMapping("/communityEmail")
-	public ResponseEntity<List<EmailByCityDTO>> listOfEmailByCity(@RequestParam("city") String city)
+	public ResponseEntity<List<String>> listOfEmailByCity(@RequestParam("city") String city)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getListOFEmail(city));
 	}

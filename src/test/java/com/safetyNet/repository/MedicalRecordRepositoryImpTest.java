@@ -5,9 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.safetyNet.model.MedicalRecordsModel;
-
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,8 +12,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+
+import com.safetyNet.model.MedicalRecordsModel;
 
 @ExtendWith(MockitoExtension.class)
 class MedicalRecordRepositoryImpTest {
@@ -37,7 +34,7 @@ class MedicalRecordRepositoryImpTest {
 		//THENE
 		assertThat(listDesDossiers).isNotEmpty();
 	}
-	
+	 
 	
 	@Test
 	@DisplayName("Tester que quand je saisi un nom et un prenom alors je récupère le dossier ")

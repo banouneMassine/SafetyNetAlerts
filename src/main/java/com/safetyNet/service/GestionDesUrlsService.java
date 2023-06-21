@@ -51,7 +51,7 @@ public class GestionDesUrlsService {
 		listDeStation = firestationsRepository.findByStationNumber(stationNumber);
 		List<PersonsCoveredByTheFirestationDTO> listDesPersonnesCorrespondants = new ArrayList<>();
 		for (FirestationsModel fireStation : listDeStation) {
-
+ 
 			for (PersonsModel personne : listDesPersonnes) {
 				if (fireStation.getAddress().equals(personne.getAddress())) {
 					PersonsCoveredByTheFirestationDTO personsCoveredByTheFirestationDTO = new PersonsCoveredByTheFirestationDTO();
@@ -80,7 +80,7 @@ public class GestionDesUrlsService {
 
 				if (personnes.getFirstName().equals(enfants.getFirstName())
 						&& personnes.getLastName().equals(enfants.getLastName())
-						&& GestionDesUrlsService.calculateAge(enfants.getBirthdate()) <= 18) {
+						&& GestionDesUrlsService.calculateAge(enfants.getBirthdate()) <= 18) { 
 					ChildDTO childDTO = new ChildDTO();
 					childDTO.setFirstName(personnes.getFirstName());
 					childDTO.setLastName(personnes.getLastName());
@@ -98,15 +98,13 @@ public class GestionDesUrlsService {
 
 	// Cette url doit retourner une liste des numéros de téléphone des résidents
 	// desservis par la caserne de pompiers
-	public List<PhoneNumberByStationNumberDTO> getListofNumber(int stationNumber) {
-
-		List<PhoneNumberByStationNumberDTO> listDesNumurosCorrespondants = new ArrayList<>();
-
-		for (PersonsCoveredByTheFirestationDTO personsCoveredByTheFirestationDTO : getListOfPeopleCoveredByTheFirestation(
-				stationNumber)) {
-			PhoneNumberByStationNumberDTO phoneNumberByStationNumberDTO = new PhoneNumberByStationNumberDTO();
-			phoneNumberByStationNumberDTO.setPhone(personsCoveredByTheFirestationDTO.getPhone());
-			listDesNumurosCorrespondants.add(phoneNumberByStationNumberDTO);
+	public List<String> getListofNumber(int stationNumber) {
+ 
+		List<String> listDesNumurosCorrespondants = new ArrayList<>();
+		List<PersonsCoveredByTheFirestationDTO> listPesronnes = getListOfPeopleCoveredByTheFirestation(stationNumber);
+		for (PersonsCoveredByTheFirestationDTO personsCoveredByTheFirestationDTO : listPesronnes ) {
+	
+			listDesNumurosCorrespondants.add(personsCoveredByTheFirestationDTO.getPhone());
 		}
 		logger.info("Récuperer la liste des numéros de téléphone des résidents desservis par la caserne de pompiers numéro "+ stationNumber);
 		return listDesNumurosCorrespondants;
@@ -126,7 +124,8 @@ public class GestionDesUrlsService {
 						&& habitant.getLastName().equalsIgnoreCase(medicalRecord.getLastName())) {
 
 					FireDTO fireDTO = new FireDTO();
-
+					
+					fireDTO.setFirstName(habitant.getFirstName());
 					fireDTO.setLastName(habitant.getLastName());
 					fireDTO.setPhone(habitant.getPhone());
 					fireDTO.setAge(GestionDesUrlsService.calculateAge(medicalRecord.birthdate));
@@ -140,14 +139,13 @@ public class GestionDesUrlsService {
 		}
 		logger.info("Récuperer la liste des habitants vivant à l’adresse "+ adresse + " ainsi que le numéro de la caserne de pompiers la desservant ");
 		return listdesHabitants;
-
+ 
 	}
 
 	public List<FloodDTO> getListOfServedByFireStations(List<Integer> stations) {
 
-		for (int station : stations) {
+		for (int station : stations) { 
 			listDeStation = firestationsRepository.findByStationNumber(station);
-
 			listDesPersonnes = personsRepository.findAll();
 			listDesDossiers = medicalRecordRepository.findAll();
 
@@ -169,7 +167,8 @@ public class GestionDesUrlsService {
 
 								
 								FireDTO fireDTO = new FireDTO();
-
+								
+								fireDTO.setFirstName(personne.getFirstName());
 								fireDTO.setLastName(personne.getLastName());
 								fireDTO.setPhone(personne.getPhone());
 								fireDTO.setAge(GestionDesUrlsService.calculateAge(medicalRecord.birthdate));
@@ -222,14 +221,12 @@ public class GestionDesUrlsService {
 	}
 
 	// Cette url doit retourner les adresses mail de tous les habitants de la ville.
-	public List<EmailByCityDTO> getListOFEmail(String city) {
+	public List<String> getListOFEmail(String city) {
 		listDesPersonnes = personsRepository.findAll();
-		List<EmailByCityDTO> listDesEmailCorrespondants = new ArrayList<>();
+		List<String> listDesEmailCorrespondants = new ArrayList<>();
 		for (PersonsModel person : listDesPersonnes) {
-			if (person.getCity().equalsIgnoreCase(city)) {
-				EmailByCityDTO emailByCityDTO = new EmailByCityDTO();
-				emailByCityDTO.setEmail(person.getEmail());
-				listDesEmailCorrespondants.add(emailByCityDTO);
+			if (person.getCity().equalsIgnoreCase(city)) {	
+				listDesEmailCorrespondants.add(person.getEmail());
 			}
 		}
 		logger.info("Récuperer la liste des  adresses mails de tous les habitants de la ville " + city);

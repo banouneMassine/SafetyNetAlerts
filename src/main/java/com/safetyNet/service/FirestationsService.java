@@ -21,28 +21,29 @@ public class FirestationsService {
 	
 	@Autowired
 	FirestationsRepository firestationsRepository;
-	public FireStationsDTO addFireStation( FirestationsModel newFirestations)
+	public FireStationsDTO addFireStation( FirestationsModel newFirestations) throws FireStationIntrouvableException
 	{
-		if(newFirestations !=  null)
+		if(newFirestations ==  null)
     	{
-			logger.info("Ajouter la station  "+ newFirestations.getAddress() );
-			return this.convertToDTO(firestationsRepository.saveFireStation(newFirestations));
+			logger.error("Impossible d'ajouter une station vide" );
+			throw new FireStationIntrouvableException("Impossible d'ajouter une station vide");
 			
     	}
-		
-	    return null ;
+		logger.info("Ajouter la station  "+ newFirestations.getAddress() );
+		return this.convertToDTO(firestationsRepository.saveFireStation(newFirestations));
+	   
 	}
 	
 	public FireStationsDTO updateFireStations(FirestationsModel updateFireStations) throws FireStationIntrouvableException
 	{
-		
-			if(firestationsRepository.updateFireStation(updateFireStations) == null) 
+			FirestationsModel Firestation =firestationsRepository.updateFireStation(updateFireStations);
+			if(Firestation == null) 
 			{
 				logger.error("La station  "+updateFireStations.getAddress() +" est introuvable" );
-				throw new FireStationIntrouvableException("La station "+ updateFireStations.address + " est introuvable ");
+				throw new FireStationIntrouvableException("La station "+ updateFireStations.address + " est introuvable");
 			}
 			logger.info("Modifier la station  "+ updateFireStations.getAddress() );
-			return this.convertToDTO(firestationsRepository.updateFireStation(updateFireStations));
+			return this.convertToDTO(Firestation);
 
 	}
 	
@@ -61,9 +62,8 @@ public class FirestationsService {
 	}
 	
 	
-	public List<FireStationsDTO> getFireStations() throws FireStationIntrouvableException
+	public List<FireStationsDTO> getFireStations() 
 	{
-		if(firestationsRepository.findAll().isEmpty()) throw new FireStationIntrouvableException("La liste des stations est vide");
 		List<FireStationsDTO> listFireStationsDTO = new ArrayList<>();
 		for(FirestationsModel firestation :  firestationsRepository.findAll())
 		{
@@ -72,7 +72,7 @@ public class FirestationsService {
 		logger.info("Récuperer la liste des stations");
 		return listFireStationsDTO;
 		
-	}
+	} 
 	
 	public FireStationsDTO getFireStation(String adresse) throws FireStationIntrouvableException
 	{

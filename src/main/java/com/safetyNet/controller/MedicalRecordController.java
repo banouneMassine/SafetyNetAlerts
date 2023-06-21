@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.safetyNet.DTO.MedicalRecordsDTO;
 import com.safetyNet.exceptions.MedicalRecordsIntrouvableException;
-import com.safetyNet.exceptions.PersonIntrovableExeption;
 import com.safetyNet.model.MedicalRecordsModel;
 import com.safetyNet.service.MedicalRecordsService;
 
@@ -42,7 +41,7 @@ public class MedicalRecordController {
 	// Ajouter un MedicalRecord
 
 	@PostMapping(value = "/medicalRecord")
-	public ResponseEntity<MedicalRecordsDTO> postMedicalRecaord(@RequestBody MedicalRecordsModel newMedicalRecord) throws PersonIntrovableExeption {
+	public ResponseEntity<MedicalRecordsDTO> postMedicalRecaord(@RequestBody MedicalRecordsModel newMedicalRecord) throws MedicalRecordsIntrouvableException {
 
 		return ResponseEntity.status(HttpStatus.OK).body( medicalRecordsService.addMedicalRecord(newMedicalRecord));
 

@@ -4,6 +4,16 @@ import java.util.List;
 
 public class FireDTO {
 	
+	public String firstName;
+	
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
 	public String lastName;
 	
 	public int age ; 
