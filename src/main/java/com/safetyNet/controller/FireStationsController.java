@@ -26,7 +26,7 @@ public class FireStationsController {
 	FirestationsService fireStationsService ;
 	
 	@GetMapping("/firestationAll")
-	public ResponseEntity<List<FireStationsDTO>> getFireStationsAll() throws FireStationIntrouvableException
+	public ResponseEntity<List<FireStationsDTO>> getFireStationsAll() 
 	{
 		
 		return ResponseEntity.status(HttpStatus.OK).body(fireStationsService.getFireStations());

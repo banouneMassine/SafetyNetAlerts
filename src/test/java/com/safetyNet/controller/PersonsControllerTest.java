@@ -2,7 +2,6 @@ package com.safetyNet.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,9 +15,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import org.springframework.http.ResponseEntity;
-
 
 import com.safetyNet.DTO.PersonsDTO;
 import com.safetyNet.exceptions.PersonIntrovableExeption;
@@ -118,7 +115,7 @@ class PersonsControllerTest {
 	}
 	
 	@Test
-	@DisplayName("Tester la récupération d'une personne a partir de son non/prenom")
+	@DisplayName("Tester la supprission d'une personne a partir de son non/prenom")
 	void removePerson_wheneEntringFirstNameAndLastName_ThenRuturnPerson() throws Exception {
 		//GIVEN
 		PersonsDTO person = new PersonsDTO();
@@ -136,7 +133,7 @@ class PersonsControllerTest {
 	
 
 	@Test
-	@DisplayName("Tester la récupération d'une personne introuvable ")
+	@DisplayName("Tester la supprission d'une personne introuvable ")
 	void deletePerson_wheneEntringAnNotFoundPerson_ThenRuturnException() throws Exception {
 		//GIVEN		
 		when(personsService.removePerson("wayne","ROONEY")).thenThrow(new PersonIntrovableExeption("La personne wayne ROONEY est introuvable"));
@@ -151,7 +148,7 @@ class PersonsControllerTest {
 	}
 	
 	@Test
-	@DisplayName("Tester l'ajout d'une personne")
+	@DisplayName("Tester la modif d'une personne")
 	void putPerson_wheneEntringPerson_ThenRuturnPerson() throws Exception {
 		//GIVEN
 		PersonsModel person = new PersonsModel();
@@ -172,7 +169,7 @@ class PersonsControllerTest {
 	}
 	
 	@Test
-	@DisplayName("Tester l'ajout d'une personne null ")
+	@DisplayName("Tester la modif d'une personne null ")
 	void putPerson_wheneAddingAnNotFoundPerson_ThenRuturnException() throws Exception {
 		//GIVEN		
 		when(personsService.updatePerson(null)).thenThrow(new PersonIntrovableExeption("La personne wayne ROONEY est introuvable"));

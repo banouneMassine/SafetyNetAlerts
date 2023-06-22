@@ -26,7 +26,7 @@ public class MedicalRecordController {
 
 	// Recuperer tous les MedicalRecords
 	@GetMapping("/medicalRecordALL")
-	public ResponseEntity<List<MedicalRecordsDTO>> getMedicalRecordsAll() throws MedicalRecordsIntrouvableException {
+	public ResponseEntity<List<MedicalRecordsDTO>> getMedicalRecordsAll()  {
 		return ResponseEntity.status(HttpStatus.OK).body(medicalRecordsService.getMedicalRecords());
 	}
 

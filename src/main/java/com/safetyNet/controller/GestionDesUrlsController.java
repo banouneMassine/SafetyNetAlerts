@@ -28,7 +28,6 @@ public class GestionDesUrlsController {
 		return ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getListOfPeopleCoveredByTheFirestation(stationNumber));
 	}
 	
-	
 	//Cette url doit retourner une liste d'enfants habitant à cette adresse
 	@GetMapping("/childAlert")
 	public ResponseEntity<List<ChildDTO>> listOfChildLivingAtThisAddress(@RequestParam("address") String address)
@@ -50,15 +49,12 @@ public class GestionDesUrlsController {
 		return ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getListOfPersonAndFirestation(address));
 	}
 	
-	
 	//Cette url doit retourner une liste de tous les foyers desservis par la caserne.
 	@GetMapping("/flood")
 	public ResponseEntity<List<FloodDTO>> listOFHomesServedByFireStations(@RequestParam("stations") List<Integer> station)
 	{
 		return  ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getListOfServedByFireStations(station));
 	}
-	
-	
 	
 	//Cette url doit retourner les adresses mail de tous les habitants de la ville.
 	@GetMapping("/communityEmail")
