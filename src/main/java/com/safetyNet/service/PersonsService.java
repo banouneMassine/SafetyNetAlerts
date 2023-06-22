@@ -23,7 +23,7 @@ public class PersonsService {
 	private static final Logger logger = LogManager.getLogger("PersonsService");
 	@Autowired
 	PersonsRepository personsRepository;
-	
+	 
 	public List<PersonsDTO> getPersons()  {
 		
 		List<PersonsDTO> listPersonsDTO = new ArrayList<>();
@@ -33,16 +33,16 @@ public class PersonsService {
 		}
 		logger.info("Récuperer la liste des personnes");
 		return listPersonsDTO;
-		
-	}
-
+		  
+	} 
+ 
 	public PersonsDTO getPerson(String firstName, String lastName) throws PersonIntrovableExeption  {
 		
 		
 		PersonsModel myPerson = personsRepository.findByName(firstName, lastName);
 		if(myPerson == null )
 		{
-			logger.info("La personne " +firstName+ " "+ lastName + " est introuvable");
+			logger.error("La personne " +firstName+ " "+ lastName + " est introuvable");
 			throw new PersonIntrovableExeption("La personne " +firstName+ " "+ lastName + " est introuvable");
 	    }
 		logger.info("Récuperer la personne  " + firstName +" " +lastName);
@@ -63,7 +63,7 @@ public class PersonsService {
 			return   this.convertToDTO(personsRepository.save(person));
 		}
 		
-	}
+	} 
 
 	// supprimer une personne 
 	public PersonsDTO removePerson(String firstName, String lastName) throws PersonIntrovableExeption {

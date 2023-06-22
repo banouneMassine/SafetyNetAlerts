@@ -8,10 +8,11 @@ import org.springframework.stereotype.Repository;
 import com.safetyNet.model.FirestationsModel;
 
 
+
 @Repository
 public class FirestationsRepositoryImp implements FirestationsRepository {
 
-	
+	 
 	private List<FirestationsModel> listOfFireStations = new ArrayList<>();
 	
 	@Override
@@ -31,8 +32,7 @@ public class FirestationsRepositoryImp implements FirestationsRepository {
 			if(fireStation.getAddress().equalsIgnoreCase(adresse))
 			{
 				return fireStation;
-			}
-				
+			}	
 		}
 		return null;
 	}
@@ -54,12 +54,8 @@ public class FirestationsRepositoryImp implements FirestationsRepository {
 	@Override 
 	public FirestationsModel  saveFireStation( FirestationsModel newFirestations)
 	{
-		if(this.listOfFireStations.add(newFirestations))
-		{
-			return newFirestations ;
-		}
-		return null ; 
-		 
+		this.listOfFireStations.add(newFirestations);
+		return newFirestations ;
 	}
 	
 	@Override

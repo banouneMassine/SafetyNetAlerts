@@ -10,9 +10,10 @@ import com.safetyNet.model.PersonsModel;
 @Repository
 public class PersonsRepositoryImp implements PersonsRepository {
 	private List<PersonsModel> personsList = new ArrayList<>();
-
+	
+	@Override
 	public void addPerson(PersonsModel person) {
-		personsList.add(person);
+		this.personsList.add(person);
 	}
 
 	@Override
@@ -23,7 +24,7 @@ public class PersonsRepositoryImp implements PersonsRepository {
 
 	@Override
 	public PersonsModel findByName(String firstName , String lastName) {
-		
+		 
 	
 		for (PersonsModel person : this.personsList) {
 			if (person.getFirstName().equalsIgnoreCase(firstName) && person.getLastName().equalsIgnoreCase(lastName)) {
@@ -48,6 +49,8 @@ public class PersonsRepositoryImp implements PersonsRepository {
 		return listDespersonnesByAdresse;
 	}
 	
+
+	
 	@Override 
 	public List<PersonsModel> getFamilles( PersonsModel person)
 	{
@@ -65,12 +68,9 @@ public class PersonsRepositoryImp implements PersonsRepository {
 	@Override
 	public PersonsModel save(PersonsModel person) {
 
-		 if (this.personsList.add(person))
-		 {
-			 return person; 
-		 }
-		 return null ; 
-		
+		this.personsList.add(person);
+		return person; 
+		 
 	}
 	
 
@@ -89,7 +89,7 @@ public class PersonsRepositoryImp implements PersonsRepository {
 	@Override
 	public PersonsModel updatePerson(PersonsModel newPreson) 
 	{
-			PersonsModel personSearche= this.findByName(newPreson.firstName, newPreson.lastName);
+			PersonsModel personSearche= this.findByName(newPreson.getFirstName(), newPreson.getLastName());
 			if (personSearche != null)
 			{
 				personSearche.setAddress(newPreson.getAddress());
@@ -97,7 +97,7 @@ public class PersonsRepositoryImp implements PersonsRepository {
 				personSearche.setZip(newPreson.getZip());
 				personSearche.setEmail(newPreson.getEmail());
 				personSearche.setPhone(newPreson.getPhone());
-				return newPreson ; 
+				return personSearche ; 
 			}
 			
 			return null ;

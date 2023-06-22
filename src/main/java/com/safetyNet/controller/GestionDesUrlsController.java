@@ -9,17 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.safetyNet.DTO.ChildDTO;
-import com.safetyNet.DTO.EmailByCityDTO;
 import com.safetyNet.DTO.FireDTO;
 import com.safetyNet.DTO.FloodDTO;
 import com.safetyNet.DTO.PersonInfoDTO;
 import com.safetyNet.DTO.PersonsCoveredByTheFirestationDTO;
-import com.safetyNet.DTO.PhoneNumberByStationNumberDTO;
 import com.safetyNet.service.GestionDesUrlsService;
 
-@RestController
+@RestController 
 public class GestionDesUrlsController {
 	@Autowired
 	GestionDesUrlsService gestionDesUrlsService ; 
@@ -31,7 +28,6 @@ public class GestionDesUrlsController {
 		return ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getListOfPeopleCoveredByTheFirestation(stationNumber));
 	}
 	
-	
 	//Cette url doit retourner une liste d'enfants habitant à cette adresse
 	@GetMapping("/childAlert")
 	public ResponseEntity<List<ChildDTO>> listOfChildLivingAtThisAddress(@RequestParam("address") String address)
@@ -41,7 +37,7 @@ public class GestionDesUrlsController {
 	
 	//Cette url doit retourner une liste des numéros de téléphone des résidents desservis par la caserne de pompiers
 	@GetMapping("/phoneAlert")
-	public ResponseEntity<List<PhoneNumberByStationNumberDTO>> listOfNumberPhoneByFireStation(@RequestParam("stationNumber") int stationNumber )
+	public ResponseEntity<List<String>> listOfNumberPhoneByFireStation(@RequestParam("stationNumber") int stationNumber )
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getListofNumber(stationNumber));
 	}
@@ -53,7 +49,6 @@ public class GestionDesUrlsController {
 		return ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getListOfPersonAndFirestation(address));
 	}
 	
-	
 	//Cette url doit retourner une liste de tous les foyers desservis par la caserne.
 	@GetMapping("/flood")
 	public ResponseEntity<List<FloodDTO>> listOFHomesServedByFireStations(@RequestParam("stations") List<Integer> station)
@@ -61,11 +56,9 @@ public class GestionDesUrlsController {
 		return  ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getListOfServedByFireStations(station));
 	}
 	
-	
-	
 	//Cette url doit retourner les adresses mail de tous les habitants de la ville.
 	@GetMapping("/communityEmail")
-	public ResponseEntity<List<EmailByCityDTO>> listOfEmailByCity(@RequestParam("city") String city)
+	public ResponseEntity<List<String>> listOfEmailByCity(@RequestParam("city") String city)
 	{
 		return ResponseEntity.status(HttpStatus.OK).body(gestionDesUrlsService.getListOFEmail(city));
 	}

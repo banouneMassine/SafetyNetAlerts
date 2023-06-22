@@ -26,7 +26,7 @@ public class FireStationsController {
 	FirestationsService fireStationsService ;
 	
 	@GetMapping("/firestationAll")
-	public ResponseEntity<List<FireStationsDTO>> getFireStationsAll() throws FireStationIntrouvableException
+	public ResponseEntity<List<FireStationsDTO>> getFireStationsAll() 
 	{
 		
 		return ResponseEntity.status(HttpStatus.OK).body(fireStationsService.getFireStations());
@@ -41,7 +41,7 @@ public class FireStationsController {
 	}
 	
 	@PostMapping(value = "/firestation")
-	public ResponseEntity<FireStationsDTO>   postFireStation(@RequestBody  FirestationsModel newFirestations)
+	public ResponseEntity<FireStationsDTO>   postFireStation(@RequestBody  FirestationsModel newFirestations) throws FireStationIntrouvableException
 	{
 		
 		return ResponseEntity.status(HttpStatus.OK).body(fireStationsService.addFireStation(newFirestations));
