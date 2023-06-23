@@ -33,7 +33,7 @@ class PersonsControllerTest {
 
 	@Test
 	@DisplayName("Tester la récupération de la liste des personnes")
-	void test_getPersonsALL1()  {
+	void test_getPersonsALL()  {
 		//GIVEN
 		List<PersonsDTO> listPersons = new ArrayList<>();
 		listPersons.add(new PersonsDTO());

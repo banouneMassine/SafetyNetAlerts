@@ -35,7 +35,7 @@ public class FireStationsController {
 	
 	@GetMapping("/firestation/{adresse}")
 	public ResponseEntity<FireStationsDTO>getFireStation(@PathVariable String adresse) throws FireStationIntrouvableException
-	{
+	{ 
 		
 		return ResponseEntity.status(HttpStatus.OK).body(fireStationsService.getFireStation(adresse));
 	}
