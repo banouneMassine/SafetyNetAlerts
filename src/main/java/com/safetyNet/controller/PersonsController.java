@@ -29,7 +29,7 @@ public class PersonsController {
 		
 		return ResponseEntity.status(HttpStatus.OK).body(personsService.getPersons()); 
 	}
-
+ 
 	@GetMapping("/person/{firstName}/{lastName}")
 	public ResponseEntity<PersonsDTO> getPerson(@PathVariable String firstName, @PathVariable String lastName) throws PersonIntrovableExeption {
 		return ResponseEntity.status(HttpStatus.OK).body(personsService.getPerson(firstName, lastName));

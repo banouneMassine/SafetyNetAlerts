@@ -70,8 +70,8 @@ class GestionDesUrlsControllerTest {
 	}
 	
 	@Test
-	@DisplayName("Tester la récupération de la liste des enfants d'une adresse")
-	void listOfPersonsWithFireStationByAdresse_wheneEntringAdresse_ThenRuturnListOfPersoneAndFireStation()
+	@DisplayName("Tester la récupération de laliste des numéros de téléphone des résidents desservis par la caserne de pompiers ")
+	void listOfNumberPhoneByFireStation_wheneEntringStationNumber_ThenRuturnListOfNumberPhone()
 	{
 		//GIVEN
 		int stationNumber = 1;
@@ -89,7 +89,7 @@ class GestionDesUrlsControllerTest {
 	
 	@Test
 	@DisplayName("Tester la récupération de la lists des habitants vivant à l’adresse donnée ainsi que le numéro de la station desservant")
-	void listOfNumberPhoneByFireStation_wheneEntringStationNumber_ThenRuturnListOfNumberPhone()
+	void listOfPersonsWithFireStationByAdresse_wheneEntringAdresse_ThenRuturnListOfPersoneAndFireStation()
 	{
 		//GIVEN
 		String adresse = "adresse 2";
@@ -144,7 +144,7 @@ class GestionDesUrlsControllerTest {
 	}
 	
 	@Test
-	@DisplayName("Tester la récupération des adresses mail de tous les habitants de la ville")
+	@DisplayName("Tester la récupération des informations d'une personne")
 	void listOfPersonInfos_wheneEntringFirstAndLastName_ThenRuturnListOfInfos()
 	{
 		//GIVEN
