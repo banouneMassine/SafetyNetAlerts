@@ -75,7 +75,7 @@ public class GestionDesUrlsService {
 		List<ChildDTO> listDesEnfantsCorrespondants = new ArrayList<>();
 		for (PersonsModel personnes : listDesPersonnes) {
 			for (MedicalRecordsModel enfants : listDesDossiers) {
-
+ 
 				if (personnes.getFirstName().equals(enfants.getFirstName())
 						&& personnes.getLastName().equals(enfants.getLastName())
 						&& GestionDesUrlsService.calculateAge(enfants.getBirthdate()) <= 18) { 

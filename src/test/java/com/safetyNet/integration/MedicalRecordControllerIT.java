@@ -1,7 +1,6 @@
 package com.safetyNet.integration;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 
@@ -18,9 +17,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.safetyNet.DTO.PersonsDTO;
 import com.safetyNet.model.MedicalRecordsModel;
-import com.safetyNet.model.PersonsModel;
 
 
 @SpringBootTest
