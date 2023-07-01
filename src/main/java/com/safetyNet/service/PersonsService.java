@@ -14,8 +14,9 @@ import com.safetyNet.exceptions.PersonIntrovableExeption;
 import com.safetyNet.model.PersonsModel;
 import com.safetyNet.repository.PersonsRepository;
 
-
-
+/**
+ * Cette class traite les action du CRUD pour l'entite personsModel.
+ */
 
 @Service
 public class PersonsService {
@@ -23,7 +24,11 @@ public class PersonsService {
 	private static final Logger logger = LogManager.getLogger("PersonsService");
 	@Autowired
 	PersonsRepository personsRepository;
-	 
+	/**
+     * Cette méthode recupere la liste des personnes.
+     * @param /.
+     * @return listPersonsDTO = la liste des personnes.
+     */
 	public List<PersonsDTO> getPersons()  {
 		
 		List<PersonsDTO> listPersonsDTO = new ArrayList<>();
@@ -36,6 +41,12 @@ public class PersonsService {
 		  
 	} 
  
+	/**
+     * Cette méthode recupere une personne via son nom / prenom.
+     * @param firstName : prenom de la personne
+     * @param lastName : nom de la personne 
+     * @return PersonsDTO = la personne recherechee.
+     */
 	public PersonsDTO getPerson(String firstName, String lastName) throws PersonIntrovableExeption  {
 		
 		
@@ -50,7 +61,11 @@ public class PersonsService {
 		
 	}
 
-	// ajouter une personne 
+	/**
+     * Cette méthode ajoute une personne a la liste des personnes.
+     * @param person : la personne a ajoutee
+     * @return PersonsDTO = la personne DTO qui a ete ajoutee.
+     */
 	public PersonsDTO addPerson(PersonsModel person) throws PersonIntrovableExeption {
 
 		if(person == null )
@@ -65,7 +80,12 @@ public class PersonsService {
 		
 	} 
 
-	// supprimer une personne 
+	/**
+     * Cette méthode supprime une personne de la liste des personnes.
+     * @param firstName : prenom de la personne
+     * @param lastName : nom de la personne 
+     * @return PersonsDTO = la personne DTO qui a ete supprimee.
+     */
 	public PersonsDTO removePerson(String firstName, String lastName) throws PersonIntrovableExeption {
 
 			PersonsModel personToDelet = personsRepository.findByName(firstName, lastName);
@@ -76,12 +96,13 @@ public class PersonsService {
 				}
 			logger.info("Supprimer la personne " + firstName +" " +lastName);
 			return	this.convertToDTO(personsRepository.deletePerson(personToDelet));
-    	
-		
-		
 	}
 
-	//modifier une personne
+	/**
+     * Cette méthode modifiee une personne .
+     * @param newPreson : la personne a modifier avec de nouvelles donnees 
+     * @return PersonsDTO = la personne DTO qui a ete modifiee.
+     */
 	public PersonsDTO updatePerson(PersonsModel  newPreson) throws PersonIntrovableExeption 
 	{	
 			if(personsRepository.updatePerson(newPreson) == null) 
@@ -93,6 +114,11 @@ public class PersonsService {
 			return this.convertToDTO(personsRepository.updatePerson(newPreson));
 	}
 	
+	/**
+     * Cette méthode convertie une instance PersonsModel en une instance  PersonsDTO.
+     * @param PersonsModel 
+     * @return PersonsDTO 
+     */
 	public PersonsDTO convertToDTO(PersonsModel personsModel)
 	{
 			PersonsDTO personsDTO = new PersonsDTO();

@@ -86,8 +86,7 @@ class GestionDesUrlsControllerIT {
 
 	@Test
 	@DisplayName("Tester la récupération de laliste des numéros de téléphone des résidents desservis par la caserne de pompiers ")
-	void listOfNumberPhoneByFireStation_wheneEntringStationNumber_ThenRuturnListOfNumberPhone()
-			throws Exception {
+	void listOfNumberPhoneByFireStation_wheneEntringStationNumber_ThenRuturnListOfNumberPhone() throws Exception {
 		int stationNumber = 2;
 		String NumberPhoneExpected = "841-874-6513";
 
@@ -96,7 +95,7 @@ class GestionDesUrlsControllerIT {
 		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get("/phoneAlert")
 				.param("stationNumber", String.valueOf(stationNumber)).contentType(MediaType.APPLICATION_JSON));
 		// THEN
-		//response.andDo(MockMvcResultHandlers.print());
+		// response.andDo(MockMvcResultHandlers.print());
 		response.andExpect(MockMvcResultMatchers.status().isOk());
 		String responseBody = response.andReturn().getResponse().getContentAsString();
 
@@ -108,26 +107,26 @@ class GestionDesUrlsControllerIT {
 	void listOfEmailByCity_wheneEntringcity_ThenRuturnListOfEmails() throws Exception {
 		// GIVEN
 		String city = "Culver";
-		String adresseEmailExpected =  "lily@email.com";
+		String adresseEmailExpected = "lily@email.com";
 		// WHEN
 
-		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get("/communityEmail")
-				.param("city", city).contentType(MediaType.APPLICATION_JSON));
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get("/communityEmail").param("city", city)
+				.contentType(MediaType.APPLICATION_JSON));
 		// THEN
-		//response.andDo(MockMvcResultHandlers.print());
+		// response.andDo(MockMvcResultHandlers.print());
 		response.andExpect(MockMvcResultMatchers.status().isOk());
 		String responseBody = response.andReturn().getResponse().getContentAsString();
 
 		assertThat(responseBody).contains(adresseEmailExpected);
 	}
-	
+
 	@Test
 	@DisplayName("Tester la récupération de la lists des habitants vivant à l’adresse donnée ainsi que le numéro de la station desservant")
-	void listOfPersonsWithFireStationByAdresse_wheneEntringAdresse_ThenRuturnListOfPersoneAndFireStation() throws Exception
-	{
+	void listOfPersonsWithFireStationByAdresse_wheneEntringAdresse_ThenRuturnListOfPersoneAndFireStation()
+			throws Exception {
 		// GIVEN
 		String adresse = "748 Townings Dr";
-		
+
 		FireDTO fireDTO = new FireDTO();
 		fireDTO.setFirstName("Foster");
 		fireDTO.setLastName("Shepard");
@@ -135,90 +134,87 @@ class GestionDesUrlsControllerIT {
 		fireDTO.setAge(43);
 		fireDTO.setMedications(new ArrayList<>());
 		fireDTO.setAllergies(new ArrayList<>());
-		
+
 		ObjectMapper objectMapper = new ObjectMapper();
 		String fireDTOJson = objectMapper.writeValueAsString(fireDTO);
 
 		// WHEN
 
-		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get("/fire")
-				.param("address", adresse)
-				.contentType(MediaType.APPLICATION_JSON));
+		ResultActions response = mockMvc.perform(
+				MockMvcRequestBuilders.get("/fire").param("address", adresse).contentType(MediaType.APPLICATION_JSON));
 		// THEN
 		// response.andDo(MockMvcResultHandlers.print());
 		response.andExpect(MockMvcResultMatchers.status().isOk());
 		String responseBody = response.andReturn().getResponse().getContentAsString();
 
 		assertThat(responseBody).contains(fireDTOJson);
-		
+
 	}
-	
 
 	@Test
 	@DisplayName("Tester la récupération de la lists de tous les foyers desservis par la caserne")
-	void listOFHomesServedByFireStations_wheneEntringStationNumber_ThenRuturnListOfFoyer() throws Exception
-	{
-		// GIVEN		
-		
+	void listOFHomesServedByFireStations_wheneEntringStationNumber_ThenRuturnListOfFoyer() throws Exception {
+		// GIVEN
+
 		FloodDTO floodDTO = new FloodDTO();
-		floodDTO.setAdresse("748 Townings Dr");
+		floodDTO.setAdresse("29 15th St");
 		FireDTO fireDTO = new FireDTO();
-		
-		fireDTO.setFirstName("Foster");
-		fireDTO.setLastName("Shepard");
-		fireDTO.setPhone("841-874-6544");
-		fireDTO.setAge(43);
+
+		fireDTO.setFirstName("Jonanathan");
+		fireDTO.setLastName("Marrack");
+		fireDTO.setPhone("841-874-6513");
+		fireDTO.setAge(35);
 		fireDTO.setMedications(new ArrayList<>());
 		fireDTO.setAllergies(new ArrayList<>());
 
 		
+		
+		
 		List<FireDTO> listFireDTO = new ArrayList<>();
 		listFireDTO.add(fireDTO);
 		floodDTO.setFireDTO(listFireDTO);
-		
+
 		ObjectMapper objectMapper = new ObjectMapper();
 		String floodDTOJson = objectMapper.writeValueAsString(floodDTO);
-		
+
 		// WHEN
 
-		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get("/flood").param("stations",  "3")
-				.contentType(MediaType.APPLICATION_JSON));
+		ResultActions response = mockMvc.perform(
+				MockMvcRequestBuilders.get("/flood").param("stations", "2").contentType(MediaType.APPLICATION_JSON));
 		// THEN
-		// response.andDo(MockMvcResultHandlers.print());
+		//response.andDo(MockMvcResultHandlers.print());
 		response.andExpect(MockMvcResultMatchers.status().isOk());
 		String responseBody = response.andReturn().getResponse().getContentAsString();
 
 		assertThat(responseBody).contains(floodDTOJson);
 	}
+
 	@Test
 	@DisplayName("Tester la récupération des informations d'une personne")
-	void listOfPersonInfos_wheneEntringFirstAndLastName_ThenRuturnListOfInfos() throws Exception
-	{
-		//GIVEN
+	void listOfPersonInfos_wheneEntringFirstAndLastName_ThenRuturnListOfInfos() throws Exception {
+		// GIVEN
 		PersonInfoDTO personInfoDTO = new PersonInfoDTO();
 		personInfoDTO.setLastName("Shepard");
 		personInfoDTO.setAddress("748 Townings Dr");
-		personInfoDTO.setAge(43) ;
+		personInfoDTO.setAge(43);
 		personInfoDTO.setEmail("jaboyd@email.com");
 		personInfoDTO.setAllergies(new ArrayList<>());
 		personInfoDTO.setMedications(new ArrayList<>());
 		personInfoDTO.setFamilles(new ArrayList<>());
-		
+
 		ObjectMapper objectMapper = new ObjectMapper();
 		String personInfoDTOJson = objectMapper.writeValueAsString(personInfoDTO);
-		
+
 		// WHEN
 
-		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get("/personInfo")
-				.param("firstName",  "Foster")
-				.param("lastName",  "Shepard")
-				.contentType(MediaType.APPLICATION_JSON));
+		ResultActions response = mockMvc.perform(MockMvcRequestBuilders.get("/personInfo").param("firstName", "Foster")
+				.param("lastName", "Shepard").contentType(MediaType.APPLICATION_JSON));
 		// THEN
-		 response.andDo(MockMvcResultHandlers.print());
+		// response.andDo(MockMvcResultHandlers.print());
 		response.andExpect(MockMvcResultMatchers.status().isOk());
 		String responseBody = response.andReturn().getResponse().getContentAsString();
 
 		assertThat(responseBody).contains(personInfoDTOJson);
-		
+
 	}
 }

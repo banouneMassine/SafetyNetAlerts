@@ -23,6 +23,12 @@ import com.safetyNet.repository.FirestationsRepository;
 import com.safetyNet.repository.MedicalRecordRepository;
 import com.safetyNet.repository.PersonsRepository;
 
+
+/**
+ * Cette class traite les differents recherches de l'application via les URLs .
+ */
+
+
 @Service
 public class GestionDesUrlsService {
 
@@ -39,10 +45,13 @@ public class GestionDesUrlsService {
 
 	List<PersonsModel> listDesPersonnes;
 	List<FirestationsModel> listDeStation;
-	List<MedicalRecordsModel> listDesDossiers;
-
-	// Cette url doit retourner une liste des personnes couvertes par la caserne de
-	// pompiers correspondante
+	List<MedicalRecordsModel> listDesDossiers; 
+	
+	/**
+     * Cette url doit retourner une liste des personnes couvertes par la caserne de pompiers correspondante
+     * @param stationNumber : numero de station.
+     * @return List<PersonsCoveredByTheFirestationDTO> = la liste des personnes .
+     */
 	public List<PersonsCoveredByTheFirestationDTO> getListOfPeopleCoveredByTheFirestation(int stationNumber) // il reste des choses a ajouté																										
 	{
 		listDesPersonnes = personsRepository.findAll();
@@ -67,7 +76,12 @@ public class GestionDesUrlsService {
 		return listDesPersonnesCorrespondants;
 	}
 
-	// Cette url doit retourner une liste d'enfants habitant à cette adresse
+	
+	/**
+     * Cette url doit retourner une liste d'enfants habitant à cette adresse
+     * @param address : adresse de station
+     * @return List<ChildDTO> = la liste des enfants .
+     */
 	public List<ChildDTO> getListOfChild(String address) {
 
 		listDesPersonnes = personsRepository.findByAdresse(address);
@@ -94,8 +108,12 @@ public class GestionDesUrlsService {
 		return listDesEnfantsCorrespondants;
 	}
 
-	// Cette url doit retourner une liste des numéros de téléphone des résidents
-	// desservis par la caserne de pompiers
+
+	/**
+     * Cette url doit retourner une liste des numéros de téléphone des résidents desservis par la caserne de pompiers
+     * @param stationNumber : numero de station
+     * @return List<String> = la liste des numeros de telephone .
+     */
 	public List<String> getListofNumber(int stationNumber) {
  
 		List<String> listDesNumurosCorrespondants = new ArrayList<>();
@@ -108,8 +126,12 @@ public class GestionDesUrlsService {
 		return listDesNumurosCorrespondants;
 	}
 
-	// Cette url doit retourner la liste des habitants vivant à l’adresse donnée
-	// ainsi que le numéro de la caserne de pompiers la desservant
+	
+	/**
+     * Cette url doit retourner la liste des habitants vivant à l’adresse donnée  ainsi que le numéro de la caserne de pompiers la desservant
+     * @param adresse : adresse de station
+     * @return List<FireDTO> = la liste des habitants .
+     */
 	public List<FireDTO> getListOfPersonAndFirestation(String adresse) {
 		listDesPersonnes = personsRepository.findByAdresse(adresse);
 		listDesDossiers = medicalRecordRepository.findAll();
@@ -140,6 +162,11 @@ public class GestionDesUrlsService {
  
 	}
 
+	/**
+     * Cette url doit retourner la liste de tous les foyers desservis par les casernes
+     * @param stations : une liste de numeros de station
+     * @return List<FloodDTO> = la liste des foyers .
+     */
 	public List<FloodDTO> getListOfServedByFireStations(List<Integer> stations) {
 
 		for (int station : stations) { 
@@ -191,6 +218,13 @@ public class GestionDesUrlsService {
 
 	}
 	
+	/**
+     * Cette url doit retourner les information de la personne
+     * @param firstName : prenom de la personne
+     * @param lastName : nom de la personne
+     * @return PersonInfoDTO = les informations de la personne
+     *  
+     */
 	public PersonInfoDTO getPersonInfos (String firstName , String lastName)
 	{
 		PersonsModel person = personsRepository.findByName(firstName,lastName);
@@ -218,7 +252,12 @@ public class GestionDesUrlsService {
 		
 	}
 
-	// Cette url doit retourner les adresses mail de tous les habitants de la ville.
+	
+	/**
+     * Cette url doit retourner les adresses mail de tous les habitants de la ville.
+     * @param city : nom de la ville
+     * @return List<String> = liste des emails
+     */
 	public List<String> getListOFEmail(String city) {
 		listDesPersonnes = personsRepository.findAll();
 		List<String> listDesEmailCorrespondants = new ArrayList<>();
@@ -230,8 +269,12 @@ public class GestionDesUrlsService {
 		logger.info("Récuperer la liste des  adresses mails de tous les habitants de la ville " + city);
 		return listDesEmailCorrespondants;
 	}
-
-	/***** calculer lage d'une personne ***/
+	
+	/**
+     * Cette methode  calcule lage d'une personne.
+     * @param dateOfBirth : la date de naissance
+     * @return age de la personne 
+     */
 	public static int calculateAge(String dateOfBirth) {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 		LocalDate birthDate = LocalDate.parse(dateOfBirth, formatter);

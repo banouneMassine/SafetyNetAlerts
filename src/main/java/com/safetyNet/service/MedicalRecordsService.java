@@ -14,7 +14,9 @@ import com.safetyNet.model.MedicalRecordsModel;
 import com.safetyNet.repository.MedicalRecordRepository;
 
 
-
+/**
+ * Cette class traite les action du CRUD pour l'entite rMedicalRecordsModel.
+ */
 
 @Service
 public class MedicalRecordsService { 
@@ -22,8 +24,13 @@ public class MedicalRecordsService {
 	private static final Logger logger = LogManager.getLogger("MedicalRecordsService");
 	@Autowired
 	MedicalRecordRepository medicalRecordRepository;
-
-	// Recuperer tous les MedicalRecords
+	
+	
+	/**
+     * Cette méthode recupere la liste des MedicalRecords.
+     * @param /.
+     * @return listMedicalRecordsDTO = la liste des MedicalRecordsonnes.
+     */
 	public List<MedicalRecordsDTO> getMedicalRecords()  {
 
 		List<MedicalRecordsDTO> listMedicalRecordsDTO = new ArrayList<>();
@@ -36,6 +43,12 @@ public class MedicalRecordsService {
 	}
 
 	// Recuperer un MedicalRecord
+	/**
+     * Cette méthode recupere un MedicalRecord d'une personne via son nom / prenom.
+     * @param firstName : prenom de la personne
+     * @param lastName : nom de la personne 
+     * @return MedicalRecordsDTO = le dossier rechereche.
+     */
 	public MedicalRecordsDTO getMedicalRecord(String firstName, String lastName) throws MedicalRecordsIntrouvableException {
 		MedicalRecordsModel  myMedicalRecord = medicalRecordRepository.findByName(firstName, lastName) ; 
 		if(myMedicalRecord ==  null )
@@ -47,8 +60,12 @@ public class MedicalRecordsService {
 		return this.convertToDTO(myMedicalRecord);
 	}
 
-	// Ajouter un MedicalRecords
-
+	
+	/**
+     * Cette méthode ajoute un dossier(MedicalRecord) a la liste des MedicalRecords.
+     * @param newMedicalRecord : le dossier a ajoute
+     * @return PersonsDTO =  le dossier DTO qui a ete ajoutee.
+     */
 	public MedicalRecordsDTO addMedicalRecord(MedicalRecordsModel newMedicalRecord) throws MedicalRecordsIntrouvableException {
 
 		if (newMedicalRecord != null) {
@@ -63,7 +80,12 @@ public class MedicalRecordsService {
 		
 
 	}
-
+	
+	/**
+     * Cette méthode modifiee une personne .
+     * @param newPreson : le dossier a modifier avec de nouvelles donnees 
+     * @return MedicalRecordsDTO = le dossier DTO qui a ete modifiee.
+     */
 	public MedicalRecordsDTO updateMedicalRecord(MedicalRecordsModel updateMedicalRecord) throws MedicalRecordsIntrouvableException {
 		MedicalRecordsModel medicalRecord= medicalRecordRepository.updateMedicalRecord(updateMedicalRecord);
 			if( medicalRecord ==  null )
@@ -77,7 +99,13 @@ public class MedicalRecordsService {
 	
 	}
 
-	// supprimer une dossier
+	
+	/**
+     * Cette méthode supprime une MedicalRecord(dossier) de la liste des MedicalRecords.
+     * @param firstName : prenom de la personne
+     * @param lastName : nom de la personne 
+     * @return PersonsDTO = le dossier  qui a ete supprimee.
+     */
 	public MedicalRecordsDTO removeMedicalRecord(String firstName, String lastName) throws MedicalRecordsIntrouvableException {
 
 	
@@ -92,6 +120,11 @@ public class MedicalRecordsService {
 	
 	}
 	
+	/**
+     * Cette méthode convertie une instance MedicalRecordsModel en une instance MedicalRecordsDTO.
+     * @param medicalRecordsModel 
+     * @return MedicalRecordsDTO 
+     */
 	public MedicalRecordsDTO convertToDTO(MedicalRecordsModel medicalRecordsModel)
 	{
 		MedicalRecordsDTO medicalRecordsDTO = new MedicalRecordsDTO();
