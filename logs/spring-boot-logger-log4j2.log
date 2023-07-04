@@ -1,0 +1,26 @@
+2023-07-04 09:13:08,145 INFO o.s.b.StartupInfoLogger [main] Starting SafetyNetAlertsApplication using Java 17.0.6 with PID 20440 (C:\Users\banou\OneDrive\Bureau\formation java\projet 5\SafetyNetAlerts\target\classes started by banou in C:\Users\banou\OneDrive\Bureau\formation java\projet 5\SafetyNetAlerts)
+2023-07-04 09:13:08,156 INFO o.s.b.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2023-07-04 09:13:08,844 INFO o.s.b.w.e.t.TomcatWebServer [main] Tomcat initialized with port(s): 9000 (http)
+2023-07-04 09:13:08,852 INFO o.a.j.l.DirectJDKLog [main] Initializing ProtocolHandler ["http-nio-9000"]
+2023-07-04 09:13:08,854 INFO o.a.j.l.DirectJDKLog [main] Starting service [Tomcat]
+2023-07-04 09:13:08,855 INFO o.a.j.l.DirectJDKLog [main] Starting Servlet engine: [Apache Tomcat/10.1.8]
+2023-07-04 09:13:08,940 INFO o.a.j.l.DirectJDKLog [main] Initializing Spring embedded WebApplicationContext
+2023-07-04 09:13:08,941 INFO o.s.b.w.s.c.ServletWebServerApplicationContext [main] Root WebApplicationContext: initialization completed in 751 ms
+2023-07-04 09:13:09,004 INFO c.s.s.LoadDataFromFile [main] Importer les données du fichier json
+2023-07-04 09:13:09,302 INFO o.a.j.l.DirectJDKLog [main] Starting ProtocolHandler ["http-nio-9000"]
+2023-07-04 09:13:09,333 INFO o.s.b.w.e.t.TomcatWebServer [main] Tomcat started on port(s): 9000 (http) with context path ''
+2023-07-04 09:13:09,342 INFO o.s.b.StartupInfoLogger [main] Started SafetyNetAlertsApplication in 1.667 seconds (process running for 2.498)
+2023-07-04 13:38:07,331 INFO o.a.j.l.DirectJDKLog [http-nio-9000-exec-1] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-07-04 13:38:07,337 INFO o.s.w.s.FrameworkServlet [http-nio-9000-exec-1] Initializing Servlet 'dispatcherServlet'
+2023-07-04 13:38:07,359 INFO o.s.w.s.FrameworkServlet [http-nio-9000-exec-1] Completed initialization in 21 ms
+2023-07-04 13:38:07,437 INFO c.s.s.MedicalRecordsService [http-nio-9000-exec-1] Récuperer la liste des dossiers 
+2023-07-04 13:38:11,128 ERROR c.s.s.MedicalRecordsService [http-nio-9000-exec-3] Le dossier est introuvable
+2023-07-04 13:38:14,039 INFO c.s.s.MedicalRecordsService [http-nio-9000-exec-4] Ajouter le dossier banoune djaafar
+2023-07-04 13:38:17,926 INFO c.s.s.GestionDesUrlsService [http-nio-9000-exec-5] Récuperer la liste des personnes couvertes par la caserne de pompiers numéro 2
+2023-07-04 13:38:20,318 INFO c.s.s.GestionDesUrlsService [http-nio-9000-exec-6] Récuperer la liste d'enfants habitant à l'adresse 1509 Culver St
+2023-07-04 13:38:46,379 INFO o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin [RMI TCP Connection(97)-127.0.0.1] Application shutdown requested.
+2023-07-04 13:38:46,397 INFO o.a.j.l.DirectJDKLog [RMI TCP Connection(97)-127.0.0.1] Pausing ProtocolHandler ["http-nio-9000"]
+2023-07-04 13:38:46,397 INFO o.a.j.l.DirectJDKLog [RMI TCP Connection(97)-127.0.0.1] Stopping service [Tomcat]
+2023-07-04 13:38:46,399 INFO o.a.j.l.DirectJDKLog [RMI TCP Connection(97)-127.0.0.1] Destroying Spring FrameworkServlet 'dispatcherServlet'
+2023-07-04 13:38:46,410 INFO o.a.j.l.DirectJDKLog [RMI TCP Connection(97)-127.0.0.1] Stopping ProtocolHandler ["http-nio-9000"]
+2023-07-04 13:38:46,412 INFO o.a.j.l.DirectJDKLog [RMI TCP Connection(97)-127.0.0.1] Destroying ProtocolHandler ["http-nio-9000"]

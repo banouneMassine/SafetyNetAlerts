@@ -28,33 +28,26 @@ public class FireStationsController {
 	@GetMapping("/firestationAll")
 	public ResponseEntity<List<FireStationsDTO>> getFireStationsAll() 
 	{
-		
 		return ResponseEntity.status(HttpStatus.OK).body(fireStationsService.getFireStations());
-	
 	}
 	
 	@GetMapping("/firestation/{adresse}")
 	public ResponseEntity<FireStationsDTO>getFireStation(@PathVariable String adresse) throws FireStationIntrouvableException
-	{ 
-		
+	{ 	
 		return ResponseEntity.status(HttpStatus.OK).body(fireStationsService.getFireStation(adresse));
 	}
 	
 	@PostMapping(value = "/firestation")
 	public ResponseEntity<FireStationsDTO>   postFireStation(@RequestBody  FirestationsModel newFirestations) throws FireStationIntrouvableException
-	{
-		
+	{	
 		return ResponseEntity.status(HttpStatus.OK).body(fireStationsService.addFireStation(newFirestations));
-	
 	}
 	
 	
 	@PutMapping(value="/firestation")
 	public ResponseEntity<FireStationsDTO> putFireStation(@RequestBody FirestationsModel updateFireStations) throws FireStationIntrouvableException
 	{
-		
 		return  ResponseEntity.status(HttpStatus.OK).body(fireStationsService.updateFireStations(updateFireStations));
-	
 	}
 	
 	@DeleteMapping(value = "/firestation/{adresse}")
